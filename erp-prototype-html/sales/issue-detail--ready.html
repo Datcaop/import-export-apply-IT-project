@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Phiếu xuất kho GI-2026-0463 | ERP prototype</title>
+<title>Phiếu xuất kho GI-2026-0463 (đủ tồn) | ERP prototype</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap">
@@ -36,24 +36,27 @@
 <div class="content">
 <header class="topbar"><div class="search"><svg class="search-icon" width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#566575" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><line x1="13.5" y1="13.5" x2="17" y2="17"></line></svg><input class="input input--search" type="search" aria-label="Tìm kiếm" placeholder="Tìm số chứng từ, mã hàng, đối tác"></div><div class="user"><div class="user-meta"><span class="user-name">Nguyễn Thu Hà</span><span class="text-xs">Thủ kho Hà Nội</span></div><div class="avatar" aria-hidden="true">TH</div></div></header>
 <main class="main">
-<div class="proto-states" role="navigation" aria-label="Trạng thái hiển thị (chỉ dành cho prototype)"><span class="fw-600">Trạng thái hiển thị:</span><a class="chip" href="../sales/issue-detail.html" aria-current="page">Thiếu tồn</a><a class="chip" href="../sales/issue-detail--ready.html">Đủ tồn, sẵn sàng ghi sổ</a><a class="chip" href="../sales/issue-detail--posted.html">Đã ghi sổ</a><a class="chip" href="../sales/issue-detail--race.html">Người khác vừa xuất trước</a></div>
+<div class="proto-states" role="navigation" aria-label="Trạng thái hiển thị (chỉ dành cho prototype)"><span class="fw-600">Trạng thái hiển thị:</span><a class="chip" href="../sales/issue-detail.html">Thiếu tồn</a><a class="chip" href="../sales/issue-detail--ready.html" aria-current="page">Đủ tồn, sẵn sàng ghi sổ</a><a class="chip" href="../sales/issue-detail--posted.html">Đã ghi sổ</a><a class="chip" href="../sales/issue-detail--race.html">Người khác vừa xuất trước</a></div>
 <div class="page-head"><div>
 <div class="breadcrumb">Bán hàng <span aria-hidden="true" class="faint">/</span> <a href="../sales/order-detail.html" class="link-strong">SO-2026-0588</a> <span aria-hidden="true" class="faint">/</span> <a href="../sales/issues.html" class="link-strong">Phiếu xuất kho</a> <span aria-hidden="true" class="faint">/</span> GI-2026-0463</div>
 <div class="row"><h1 class="page-title">Phiếu xuất kho GI-2026-0463</h1><span class="badge">Nháp</span></div></div>
-<div class="actions"><button type="button" class="btn">Lưu nháp</button><button type="button" class="btn btn--primary" disabled>Ghi sổ</button></div></div>
+<div class="actions"><button type="button" class="btn">Lưu nháp</button><a href="../sales/issue-detail--posted.html" class="btn btn--primary">Ghi sổ</a></div></div>
 <div class="card">
 <div class="grid-form">
 <div class="field"><label for="gi-so" class="field-label">Đơn bán</label><input id="gi-so" type="text" value="SO-2026-0588" readonly class="input input--readonly"></div>
 <div class="field"><label for="gi-cus" class="field-label">Khách hàng</label><input id="gi-cus" type="text" value="Công ty TNHH Minh Phát" readonly class="input input--readonly"></div>
 <div class="field"><label for="gi-wh" class="field-label">Xuất từ kho</label><select id="gi-wh" class="input"><option selected>Kho Hà Nội (HN)</option><option>Kho TP.HCM (HCM)</option></select></div>
 <div class="field"><label for="gi-date" class="field-label">Ngày xuất</label><input id="gi-date" type="text" value="19/09/2026" class="input"></div></div></div>
-<div class="alert alert--danger"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><path d="M10 2.5 L18 16.5 H2 Z"></path><line x1="10" y1="8" x2="10" y2="11.5"></line><line x1="10" y1="14" x2="10" y2="14.5"></line></svg><div>1 dòng không đủ tồn. Giảm số lượng xuất xuống 6, chuyển sang kho khác hoặc để lại cho lần xuất sau.</div></div>
+<div class="alert alert--success" role="status"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><circle cx="10" cy="10" r="8"></circle><polyline points="6.5,10.5 9,13 13.5,7.5"></polyline></svg><div>Tất cả dòng đủ tồn, có thể ghi sổ. MN-24F còn 4 cái chưa giao sẽ để lại cho lần xuất sau; đơn SO-2026-0588 vẫn ở trạng thái Xuất một phần.</div></div>
 <div class="card">
 <div class="card-head">
 <h2 class="card-title">Hàng xuất</h2></div>
-<table class="table"><thead><tr><th scope="col">Mã hàng</th><th scope="col">Tên hàng</th><th scope="col" class="num">Còn phải giao</th><th scope="col" class="num">Tồn tại kho</th><th scope="col" class="num">SL xuất</th><th scope="col">Kiểm tra</th></tr></thead><tbody><tr><td><span class="fw-600">BP-K120</span></td><td>Bàn phím cơ K120</td><td class="num">10</td><td class="num">80</td><td class="num"><input id="gi-q0" type="text" value="10" aria-label="Số lượng xuất BP-K120" class="input input--qty"></td><td><span class="badge badge--success">Đủ hàng</span></td></tr><tr class="row-error"><td><span class="fw-600">MN-24F</span></td><td>Màn hình 24 inch F24</td><td class="num">10</td><td class="num"><span class="text-danger fw-700">6</span></td><td class="num"><input id="gi-q1" type="text" value="10" aria-label="Số lượng xuất MN-24F" class="input input--qty input--invalid">
-<div class="field-error">Thiếu 4, kho chỉ còn 6</div></td><td><span class="badge badge--danger">Không đủ tồn</span></td></tr></tbody></table></div>
-<div class="alert"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><circle cx="10" cy="10" r="8"></circle><line x1="10" y1="9" x2="10" y2="14"></line><line x1="10" y1="6" x2="10" y2="6.5"></line></svg><div>Số tồn hiển thị là số tại thời điểm mở phiếu. Khi bấm Ghi sổ, hệ thống kiểm tra lại tồn một lần nữa; nếu người khác vừa xuất trước, phiếu sẽ bị từ chối và không có dòng nào bị trừ.</div></div>
+<table class="table"><thead><tr><th scope="col">Mã hàng</th><th scope="col">Tên hàng</th><th scope="col" class="num">Còn phải giao</th><th scope="col" class="num">Tồn tại kho</th><th scope="col" class="num">SL xuất</th><th scope="col">Kiểm tra</th></tr></thead><tbody>
+<tr><td><span class="fw-600">BP-K120</span></td><td>Bàn phím cơ K120</td><td class="num">10</td><td class="num">80</td><td class="num"><input id="gi-q0" type="text" value="10" class="input input--qty" aria-label="Số lượng xuất BP-K120"></td><td><span class="badge badge--success">Đủ hàng</span></td></tr>
+<tr><td><span class="fw-600">MN-24F</span></td><td>Màn hình 24 inch F24</td><td class="num">10</td><td class="num">6</td><td class="num"><input id="gi-q1" type="text" value="6" class="input input--qty" aria-label="Số lượng xuất MN-24F"></td><td><span class="badge badge--success">Đủ hàng</span></td></tr>
+</tbody></table>
+<div class="between"><span class="text-sm">Tổng số lượng xuất: 16</span><span class="text-sm">Giá vốn được tính theo giá bình quân tại thời điểm ghi sổ.</span></div></div>
+<div class="alert" role="status"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><circle cx="10" cy="10" r="8"></circle><line x1="10" y1="9" x2="10" y2="14"></line><line x1="10" y1="6" x2="10" y2="6.5"></line></svg><div>Số tồn hiển thị là số tại thời điểm mở phiếu. Khi bấm Ghi sổ, hệ thống kiểm tra lại tồn một lần nữa; nếu người khác vừa xuất trước, phiếu sẽ bị từ chối và không có dòng nào bị trừ.</div></div>
 </main>
 </div>
 </div>

@@ -36,10 +36,11 @@
 <div class="content">
 <header class="topbar"><div class="search"><svg class="search-icon" width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#566575" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><line x1="13.5" y1="13.5" x2="17" y2="17"></line></svg><input class="input input--search" type="search" aria-label="Tìm kiếm" placeholder="Tìm số chứng từ, mã hàng, đối tác"></div><div class="user"><div class="user-meta"><span class="user-name">Nguyễn Thu Hà</span><span class="text-xs">Thủ kho Hà Nội</span></div><div class="avatar" aria-hidden="true">TH</div></div></header>
 <main class="main">
+<div class="proto-states" role="navigation" aria-label="Trạng thái hiển thị (chỉ dành cho prototype)"><span class="fw-600">Trạng thái hiển thị:</span><a class="chip" href="../purchase/receipt-detail.html" aria-current="page">Nháp</a><a class="chip" href="../purchase/receipt-detail--posted.html">Đã ghi sổ</a><a class="chip" href="../purchase/receipt-detail--cancelled.html">Đã hủy</a></div>
 <div class="page-head"><div>
 <div class="breadcrumb">Mua hàng <span aria-hidden="true" class="faint">/</span> <a href="../purchase/receipts.html" class="link-strong">Phiếu nhập kho</a> <span aria-hidden="true" class="faint">/</span> GR-2026-0327</div>
 <div class="row"><h1 class="page-title">Phiếu nhập kho GR-2026-0327</h1><span class="badge">Nháp</span></div></div>
-<div class="actions"><button type="button" class="btn btn--danger">Hủy phiếu</button><button type="button" class="btn">Lưu nháp</button><a href="../inventory/stock-card.html" class="btn btn--primary">Ghi sổ</a></div></div>
+<div class="actions"><a href="../purchase/receipt-detail--cancelled.html" class="btn btn--danger">Hủy phiếu</a><button type="button" class="btn">Lưu nháp</button><a href="../purchase/receipt-detail--posted.html" class="btn btn--primary">Ghi sổ</a></div></div>
 <div class="card">
 <div class="grid-form">
 <div class="field"><label for="gr-type" class="field-label">Loại phiếu nhập</label><select id="gr-type" class="input"><option selected>Nhập mua hàng (theo PO)</option><option>Nhập ngoài PO</option><option>Tồn đầu kỳ</option><option>Khách trả hàng</option></select></div>

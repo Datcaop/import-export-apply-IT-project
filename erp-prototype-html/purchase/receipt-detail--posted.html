@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phiếu nhập kho GR-2026-0327 (đã ghi sổ) | ERP prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<div class="app">
+<nav class="sidebar" aria-label="Điều hướng chính">
+<div class="brand"><div class="brand-logo"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M3 7 L10 3 L17 7 V15 L10 18 L3 15 Z"></path><path d="M3 7 L10 11 L17 7"></path><line x1="10" y1="11" x2="10" y2="18"></line></svg></div><div class="field"><span class="brand-name">[Tên công ty]</span><span class="text-xs">Mua hàng, kho, bán hàng</span></div></div>
+<div class="nav-group"><a class="nav-link" href="../index.html">Tổng quan</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--purchase"></span>Mua hàng</div>
+<a class="nav-link nav-link--sub" href="../purchase/orders.html">Đơn mua hàng</a>
+<a class="nav-link nav-link--sub" href="../purchase/order-new.html">Tạo đơn mua</a>
+<a class="nav-link nav-link--sub" href="../purchase/receipts.html" aria-current="page">Phiếu nhập kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--sales"></span>Bán hàng</div>
+<a class="nav-link nav-link--sub" href="../sales/orders.html">Đơn bán hàng</a>
+<a class="nav-link nav-link--sub" href="../sales/issues.html">Phiếu xuất kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--inventory"></span>Kho</div>
+<a class="nav-link nav-link--sub" href="../inventory/balances.html">Tồn kho</a>
+<a class="nav-link nav-link--sub" href="../inventory/stock-card.html">Thẻ kho</a>
+<a class="nav-link nav-link--sub" href="../inventory/adjustments.html">Kiểm kê, điều chỉnh</a>
+<a class="nav-link nav-link--sub" href="../inventory/reconcile.html">Đối soát tồn kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--master"></span>Danh mục</div>
+<a class="nav-link nav-link--sub" href="../master/products.html">Sản phẩm</a>
+<a class="nav-link nav-link--sub" href="../master/warehouses.html">Kho hàng</a>
+<a class="nav-link nav-link--sub" href="../master/suppliers.html">Nhà cung cấp</a>
+<a class="nav-link nav-link--sub" href="../master/customers.html">Khách hàng</a>
+<a class="nav-link nav-link--sub" href="../master/currencies.html">Tiền tệ và tỷ giá</a></div>
+</nav>
+<div class="content">
+<header class="topbar"><div class="search"><svg class="search-icon" width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#566575" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><line x1="13.5" y1="13.5" x2="17" y2="17"></line></svg><input class="input input--search" type="search" aria-label="Tìm kiếm" placeholder="Tìm số chứng từ, mã hàng, đối tác"></div><div class="user"><div class="user-meta"><span class="user-name">Nguyễn Thu Hà</span><span class="text-xs">Thủ kho Hà Nội</span></div><div class="avatar" aria-hidden="true">TH</div></div></header>
+<main class="main">
+<div class="proto-states" role="navigation" aria-label="Trạng thái hiển thị (chỉ dành cho prototype)"><span class="fw-600">Trạng thái hiển thị:</span><a class="chip" href="../purchase/receipt-detail.html">Nháp</a><a class="chip" href="../purchase/receipt-detail--posted.html" aria-current="page">Đã ghi sổ</a><a class="chip" href="../purchase/receipt-detail--cancelled.html">Đã hủy</a></div>
+<div class="page-head"><div>
+<div class="breadcrumb">Mua hàng <span aria-hidden="true" class="faint">/</span> <a href="../purchase/receipts.html" class="link-strong">Phiếu nhập kho</a> <span aria-hidden="true" class="faint">/</span> GR-2026-0327</div>
+<div class="row"><h1 class="page-title">Phiếu nhập kho GR-2026-0327</h1><span class="badge badge--success">Đã ghi sổ</span></div></div>
+<div class="actions"><button type="button" class="btn">In phiếu</button><a href="../inventory/adjustment-detail.html" class="btn">Lập phiếu điều chỉnh</a><a href="../inventory/stock-card.html" class="btn btn--primary">Xem thẻ kho</a></div></div>
+<div class="alert alert--success" role="status"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><circle cx="10" cy="10" r="8"></circle><polyline points="6.5,10.5 9,13 13.5,7.5"></polyline></svg><div>Đã ghi sổ lúc 19/09/2026 09:15 bởi Nguyễn Thu Hà. Tồn BP-K120 tại Kho Hà Nội tăng từ 60 lên 100; <a href="../purchase/order-detail.html" class="link-strong">PO-2026-0142</a> cập nhật số đã nhận của BP-K120 thành 100/100. <a href="../inventory/stock-card.html" class="link-strong">Mở thẻ kho BP-K120</a></div></div>
+<div class="card">
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px 24px;">
+<div class="stack-4"><span class="text-sm">Loại phiếu nhập</span><span class="value">Nhập mua hàng (theo PO)</span></div>
+<div class="stack-4"><span class="text-sm">Đơn mua</span><span class="value"><a href="../purchase/order-detail.html" class="link-strong">PO-2026-0142</a></span></div>
+<div class="stack-4"><span class="text-sm">Nhà cung cấp</span><span class="value">Shenzhen Keytech Co., Ltd</span></div>
+<div class="stack-4"><span class="text-sm">Nhập vào kho</span><span class="value">Kho Hà Nội (HN)</span></div>
+<div class="stack-4"><span class="text-sm">Ngày nhập</span><span class="value">19/09/2026</span></div>
+<div class="stack-4"><span class="text-sm">Tiền tệ</span><span class="value">USD</span></div>
+<div class="stack-4"><span class="text-sm">Tỷ giá ngày nhập</span><span class="value">25.400 ₫ / USD</span></div>
+<div class="stack-4"><span class="text-sm">Ghi chú</span><span class="value">Lô hàng về đợt 2, tờ khai 10598…</span></div>
+<div class="stack-4"><span class="text-sm">Ghi sổ lúc</span><span class="value">19/09/2026 09:15</span></div>
+<div class="stack-4"><span class="text-sm">Người ghi sổ</span><span class="value">Nguyễn Thu Hà</span></div></div></div>
+<div class="card">
+<div class="card-head">
+<h2 class="card-title">Hàng đã nhập</h2></div>
+<table class="table"><thead><tr><th scope="col">Mã hàng</th><th scope="col">Tên hàng</th><th scope="col" class="num">SL nhập</th><th scope="col" class="num">Đơn giá (USD)</th><th scope="col" class="num">Giá nhập kho (₫)</th><th scope="col" class="num">Thành tiền (₫)</th><th scope="col" class="num">Tồn sau ghi sổ</th><th scope="col"></th></tr></thead><tbody>
+<tr><td><span class="fw-600">BP-K120</span></td><td>Bàn phím cơ K120</td><td class="num">40</td><td class="num">18,50</td><td class="num">469.900</td><td class="num">18.796.000</td><td class="num"><span class="fw-700">100</span></td><td><a href="../inventory/stock-card.html" class="link-strong">Thẻ kho</a></td></tr>
+</tbody></table>
+<div class="between"><span class="text-sm">Dòng TN-H3 có số lượng 0 nên không được ghi sổ; 50 cái vẫn còn phải nhận trên PO.</span><span class="big-num">Tổng giá trị nhập: 18.796.000 ₫</span></div></div>
+<div class="alert" role="status"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><circle cx="10" cy="10" r="8"></circle><line x1="10" y1="9" x2="10" y2="14"></line><line x1="10" y1="6" x2="10" y2="6.5"></line></svg><div>Phiếu đã ghi sổ không sửa, không xóa được. Nếu phát hiện sai số lượng hoặc giá, lập phiếu điều chỉnh để bù trừ; thẻ kho sẽ giữ cả hai bút toán.</div></div>
+</main>
+</div>
+</div>
+</body>
+</html>
