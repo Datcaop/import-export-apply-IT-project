@@ -19,11 +19,11 @@ Dự án được xây dựng theo mô hình **Monorepo** (pnpm workspaces):
 
 ## 🔑 Tài khoản đăng nhập mẫu
 
-Sau khi chạy lệnh seed dữ liệu, người chấm / thầy cô có thể đăng nhập bằng tài khoản Quản trị hệ thống:
+Sau khi chạy lệnh seed dữ liệu (`pnpm db:seed`), bạn có thể đăng nhập bằng một trong các tài khoản mẫu dưới đây:
 
 - **Trang đăng nhập**: `http://localhost:3000/login`
-- **Email**: `admin@erp.local`
-- **Mật khẩu**: `123456`
+- **Tên đăng nhập (Username)**: `thuha` (Thủ kho) | `quan` (Mua hàng) | `nam` (Bán hàng) | `ketoan` (Kế toán)
+- **Mật khẩu (Password)**: `Erp@2026`
 
 ---
 
