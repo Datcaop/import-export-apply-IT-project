@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thẻ kho BP-K120 | ERP prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<div class="app">
+<nav class="sidebar" aria-label="Điều hướng chính">
+<div class="brand"><div class="brand-logo"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M3 7 L10 3 L17 7 V15 L10 18 L3 15 Z"></path><path d="M3 7 L10 11 L17 7"></path><line x1="10" y1="11" x2="10" y2="18"></line></svg></div><div class="field"><span class="brand-name">[Tên công ty]</span><span class="text-xs">Mua hàng, kho, bán hàng</span></div></div>
+<div class="nav-group"><a class="nav-link" href="../index.html">Tổng quan</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--purchase"></span>Mua hàng</div>
+<a class="nav-link nav-link--sub" href="../purchase/orders.html">Đơn mua hàng</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--sales"></span>Bán hàng</div>
+</div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--inventory"></span>Kho</div>
+<a class="nav-link nav-link--sub" href="../inventory/balances.html">Tồn kho</a>
+<a class="nav-link nav-link--sub" href="../inventory/stock-card.html" aria-current="page">Thẻ kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--master"></span>Danh mục</div>
+<a class="nav-link nav-link--sub" href="../master/currencies.html">Tiền tệ và tỷ giá</a></div>
+</nav>
+<div class="content">
+<header class="topbar"><div class="search"><svg class="search-icon" width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#566575" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><line x1="13.5" y1="13.5" x2="17" y2="17"></line></svg><input class="input input--search" type="search" aria-label="Tìm kiếm" placeholder="Tìm số chứng từ, mã hàng, đối tác"></div><div class="user"><div class="user-meta"><span class="user-name">Nguyễn Thu Hà</span><span class="text-xs">Quản lý kho</span></div><div class="avatar" aria-hidden="true">TH</div></div></header>
+<main class="main">
+<div class="page-head"><div>
+<div class="breadcrumb">Kho <span aria-hidden="true" class="faint">/</span> <a href="../inventory/balances.html" class="link-strong">Tồn kho</a> <span aria-hidden="true" class="faint">/</span> Thẻ kho</div>
+<div class="row"><h1 class="page-title">Thẻ kho: BP-K120 Bàn phím cơ K120</h1></div>
+<div class="page-sub">Kho Hà Nội, tháng 09/2026</div></div>
+<div class="actions"><button type="button" class="btn">In thẻ kho</button><button type="button" class="btn">Xuất Excel</button></div></div>
+<div class="card card--compact">
+<div style="display: grid; grid-template-columns: 1.6fr 1.2fr 1fr 1fr auto; gap: 16px;">
+<div class="field"><label for="sc-p" class="field-label">Sản phẩm</label><select id="sc-p" class="input"><option selected>BP-K120 Bàn phím cơ K120</option><option>CH-M50 Chuột không dây M50</option></select></div>
+<div class="field"><label for="sc-wh" class="field-label">Kho</label><select id="sc-wh" class="input"><option selected>Kho Hà Nội</option><option>Kho TP.HCM</option></select></div>
+<div class="field"><label for="sc-from" class="field-label">Từ ngày</label><input id="sc-from" type="text" value="01/09/2026" class="input"></div>
+<div class="field"><label for="sc-to" class="field-label">Đến ngày</label><input id="sc-to" type="text" value="30/09/2026" class="input"></div>
+<div style="display: flex; align-items: flex-end;"><button type="button" class="btn">Xem</button></div></div></div>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px;">
+<div class="card">
+<div class="text-sm">Tồn đầu kỳ</div>
+<div class="stat-value">0</div>
+<div class="stat-note">01/09/2026</div></div>
+<div class="card">
+<div class="text-sm">Nhập trong kỳ</div>
+<div class="stat-value">+100</div>
+<div class="stat-note">2 phiếu nhập</div></div>
+<div class="card">
+<div class="text-sm">Xuất trong kỳ</div>
+<div class="stat-value">−30</div>
+<div class="stat-note">2 phiếu xuất</div></div>
+<div class="card">
+<div class="text-sm">Điều chỉnh</div>
+<div class="stat-value">−2</div>
+<div class="stat-note">1 phiếu kiểm kê</div></div>
+<div class="card">
+<div class="text-sm">Tồn cuối kỳ</div>
+<div class="stat-value">68</div>
+<div class="stat-note">Khớp với tồn hiện tại</div></div></div>
+<div class="card">
+<div class="card-head">
+<h2 class="card-title">Biến động trong kỳ</h2></div>
+<table class="table"><thead><tr><th scope="col">Thời gian</th><th scope="col">Chứng từ</th><th scope="col">Loại</th><th scope="col" class="num">Nhập</th><th scope="col" class="num">Xuất</th><th scope="col" class="num">Tồn sau</th><th scope="col" class="num">Giá vốn (₫)</th><th scope="col">Người ghi sổ</th></tr></thead><tbody><tr><td>10/09/2026 14:20</td><td><a href="../purchase/receipt-detail.html" class="link-strong">GR-2026-0311</a></td><td>Nhập mua</td><td class="num"><span class="qty-in">+60</span></td><td class="num"></td><td class="num"><span class="fw-700">60</span></td><td class="num">468.650</td><td>Nguyễn Thu Hà</td></tr><tr><td>19/09/2026 09:15</td><td><a href="../purchase/receipt-detail.html" class="link-strong">GR-2026-0327</a></td><td>Nhập mua</td><td class="num"><span class="qty-in">+40</span></td><td class="num"></td><td class="num"><span class="fw-700">100</span></td><td class="num">469.900</td><td>Nguyễn Thu Hà</td></tr><tr><td>19/09/2026 10:42</td><td><a href="../sales/issue-detail.html" class="link-strong">GI-2026-0451</a></td><td>Xuất bán</td><td class="num"></td><td class="num"><span class="qty-out">−20</span></td><td class="num"><span class="fw-700">80</span></td><td class="num">469.150</td><td>Phạm Đức Long</td></tr><tr><td>19/09/2026 11:30</td><td><a href="../sales/issue-detail.html" class="link-strong">GI-2026-0463</a></td><td>Xuất bán</td><td class="num"></td><td class="num"><span class="qty-out">−10</span></td><td class="num"><span class="fw-700">70</span></td><td class="num">469.150</td><td>Phạm Đức Long</td></tr><tr><td>19/09/2026 16:05</td><td><a href="../inventory/adjustment-detail.html" class="link-strong">ADJ-2026-0021</a></td><td>Điều chỉnh giảm</td><td class="num"></td><td class="num"><span class="qty-out">−2</span></td><td class="num"><span class="fw-700">68</span></td><td class="num">469.150</td><td>Nguyễn Thu Hà</td></tr></tbody></table></div>
+<div class="alert alert--success"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><circle cx="10" cy="10" r="8"></circle><polyline points="6.5,10.5 9,13 13.5,7.5"></polyline></svg><div>Đối soát: tổng biến động từ trước đến nay bằng 68, khớp với tồn hiện tại của BP-K120 tại Kho Hà Nội.</div></div>
+</main>
+</div>
+</div>
+</body>
+</html>

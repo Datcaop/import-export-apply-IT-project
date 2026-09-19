@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tiền tệ và tỷ giá | ERP prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="../assets/styles.css">
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="app">
+<nav class="sidebar" aria-label="Điều hướng chính">
+<div class="brand"><div class="brand-logo"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M3 7 L10 3 L17 7 V15 L10 18 L3 15 Z"></path><path d="M3 7 L10 11 L17 7"></path><line x1="10" y1="11" x2="10" y2="18"></line></svg></div><div class="field"><span class="brand-name">[Tên công ty]</span><span class="text-xs">Mua hàng, kho, bán hàng</span></div></div>
+<div class="nav-group"><a class="nav-link" href="../index.html">Tổng quan</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--purchase"></span>Mua hàng</div>
+<a class="nav-link nav-link--sub" href="../purchase/orders.html">Đơn mua hàng</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--sales"></span>Bán hàng</div>
+</div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--inventory"></span>Kho</div>
+<a class="nav-link nav-link--sub" href="../inventory/balances.html">Tồn kho</a>
+<a class="nav-link nav-link--sub" href="../inventory/stock-card.html">Thẻ kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--master"></span>Danh mục</div>
+<a class="nav-link nav-link--sub" href="../master/currencies.html" aria-current="page">Tiền tệ và tỷ giá</a></div>
+</nav>
+<div class="content">
+<header class="topbar"><div class="search"><svg class="search-icon" width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#566575" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><line x1="13.5" y1="13.5" x2="17" y2="17"></line></svg><input class="input input--search" type="search" aria-label="Tìm kiếm" placeholder="Tìm số chứng từ, mã hàng, đối tác"></div><div class="user"><div class="user-meta"><span class="user-name">Nguyễn Thu Hà</span><span class="text-xs">Kế toán</span></div><div class="avatar" aria-hidden="true">TH</div></div></header>
+<main class="main">
+<div class="page-head"><div>
+<div class="breadcrumb">Danh mục <span aria-hidden="true" class="faint">/</span> Tiền tệ và tỷ giá</div>
+<div class="row"><h1 class="page-title">Tiền tệ và tỷ giá</h1></div></div>
+<div class="actions"></div></div>
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 20px;">
+<div class="card">
+<div class="card-head">
+<h2 class="card-title">Tiền tệ</h2><button type="button" class="btn btn--sm">Thêm</button></div>
+<table class="table"><thead><tr><th scope="col">Mã</th><th scope="col">Tên</th><th scope="col" class="num">Số lẻ</th><th scope="col"></th></tr></thead><tbody><tr><td><span class="fw-600">VND</span></td><td>Đồng Việt Nam</td><td class="num">0</td><td><span class="badge badge--info">Tiền gốc</span></td></tr><tr><td><span class="fw-600">USD</span></td><td>Đô la Mỹ</td><td class="num">2</td><td></td></tr><tr><td><span class="fw-600">EUR</span></td><td>Euro</td><td class="num">2</td><td></td></tr><tr><td><span class="fw-600">CNY</span></td><td>Nhân dân tệ</td><td class="num">2</td><td></td></tr></tbody></table></div>
+<div class="card">
+<div class="card-head">
+<h2 class="card-title">Lịch sử tỷ giá</h2>
+<div role="tablist" aria-label="Chọn tiền tệ" class="row-8"><button type="button" role="tab" aria-selected="true" class="chip">USD</button><button type="button" role="tab" aria-selected="false" class="chip">EUR</button><button type="button" role="tab" aria-selected="false" class="chip">CNY</button></div></div>
+<div style="padding: 16px; background: #F6F8FA; border-radius: 6px; margin-bottom: 16px;">
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 16px;">
+<div class="field"><label for="er-d" class="field-label">Ngày áp dụng</label><input id="er-d" type="text" value="20/09/2026" class="input"></div>
+<div class="field"><label for="er-r" class="field-label">Tỷ giá (₫ / USD)</label><input id="er-r" type="text" value="" placeholder="VD: 25.420" class="input input--num"></div>
+<div class="field"><label for="er-s" class="field-label">Nguồn</label><select id="er-s" class="input"><option selected>Vietcombank</option><option>Ngân hàng Nhà nước</option><option>Nhập tay</option></select></div>
+<div style="display: flex; align-items: flex-end;"><button type="button" class="btn btn--primary">Thêm tỷ giá</button></div></div></div>
+<table class="table"><thead><tr><th scope="col">Ngày áp dụng</th><th scope="col" class="num">Tỷ giá (₫)</th><th scope="col">Nguồn</th><th scope="col">Người nhập</th></tr></thead><tbody><tr><td>19/09/2026</td><td class="num"><span class="fw-700">25.400</span></td><td>Vietcombank</td><td>Tự động</td></tr><tr><td>18/09/2026</td><td class="num">25.380</td><td>Vietcombank</td><td>Tự động</td></tr><tr><td>17/09/2026</td><td class="num">25.365</td><td>Vietcombank</td><td>Tự động</td></tr><tr><td>10/09/2026</td><td class="num">25.350</td><td>Vietcombank</td><td>Tự động</td></tr><tr><td>02/09/2026</td><td class="num">25.300</td><td>Vietcombank</td><td>Tự động</td></tr></tbody></table></div></div>
+<div class="alert"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><circle cx="10" cy="10" r="8"></circle><line x1="10" y1="9" x2="10" y2="14"></line><line x1="10" y1="6" x2="10" y2="6.5"></line></svg><div>Bảng tỷ giá chỉ dùng để gợi ý khi lập chứng từ. Mỗi đơn mua, phiếu nhập, đơn bán giữ nguyên tỷ giá của riêng nó, nên sửa tỷ giá ở đây không làm thay đổi chứng từ đã lập.</div></div>
+</main>
+</div>
+</div>
+</body>
+</html>
