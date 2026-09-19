@@ -1,26 +1,59 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* ── Surface & background ── */
+  --color-bg: #EEF1F4;
+  --color-surface: #FFFFFF;
+  --color-surface-alt: #F6F8FA;
+
+  /* ── Borders ── */
+  --color-border: #D5DCE4;
+  --color-border-soft: #E7EBF0;
+  --color-border-input: #BFC8D2;
+
+  /* ── Text ── */
+  --color-text: #1B2733;
+  --color-text-muted: #566575;
+  --color-text-nav: #33414F;
+  --color-text-faint: #9AA5B1;
+
+  /* ── Brand / primary ── */
+  --color-primary: #1D4E89;
+  --color-primary-hover: #133A68;
+  --color-primary-soft: #E4ECF6;
+
+  /* ── Module accents ── */
+  --color-purchase: #2F6FB3;
+  --color-inventory: #1B7F66;
+  --color-sales: #A9502A;
+  --color-master: #6B7584;
+
+  /* ── Semantic ── */
+  --color-danger: #A32016;
+  --color-success: #0F6048;
+  --color-warning: #7A4F00;
+
+  /* ── Badge backgrounds ── */
+  --color-badge-neutral: #EDF0F3;
+  --color-badge-info: #E4ECF6;
+  --color-badge-warning: #FFF1D6;
+  --color-badge-success: #DFF2EA;
+  --color-badge-danger: #FCE9E7;
+
+  /* ── Font ── */
+  --font-sans: var(--font-be-vietnam-pro), 'Segoe UI', system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* ── Base resets ── */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
 }
+
+a { color: var(--color-primary); }
+a:hover { color: var(--color-primary-hover); }
+:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+
+/* ── Tabular numbers for data ── */
+.tabular-nums { font-variant-numeric: tabular-nums; }

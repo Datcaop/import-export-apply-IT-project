@@ -1,19 +1,525 @@
+// Mô hình dữ liệu ERP Mua hàng – Kho – Bán hàng, bám theo docs/schema.sql.
+// Những thứ Prisma không diễn đạt được (CHECK, cột GENERATED, trigger, view) nằm
+// trong migration viết tay `db_rules`. Cột trạng thái/loại giữ VARCHAR + CHECK như
+// schema gốc; tập giá trị hợp lệ khai báo trong @erp/shared (enums.ts).
+
 generator client {
-  provider     = "prisma-client"
-  output       = "../src/generated/prisma"
-  moduleFormat = "esm"
+  provider        = "prisma-client"
+  output          = "../src/generated/prisma"
+  moduleFormat    = "esm"
+  previewFeatures = ["partialIndexes"]
 }
 
 datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+// ---------------------------------------------------------------------
+// Người dùng (bổ sung: schema.sql chưa có bảng người dùng)
+// ---------------------------------------------------------------------
+model AppUser {
+  id           BigInt    @id @default(autoincrement())
+  username     String    @unique @db.VarChar(50)
+  passwordHash String    @map("password_hash")
+  fullName     String    @map("full_name") @db.VarChar(100)
+  title        String?   @db.VarChar(100)
+  isActive     Boolean   @default(true) @map("is_active")
+  lastLoginAt  DateTime? @map("last_login_at") @db.Timestamptz(6)
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
 
-  @@map("users")
+  exchangeRatesCreated ExchangeRate[]          @relation("ExchangeRateCreatedBy")
+  poCreated            PurchaseOrder[]         @relation("PoCreatedBy")
+  poCancelled          PurchaseOrder[]         @relation("PoCancelledBy")
+  poClosed             PurchaseOrder[]         @relation("PoClosedBy")
+  grCreated            GoodsReceipt[]          @relation("GrCreatedBy")
+  grPosted             GoodsReceipt[]          @relation("GrPostedBy")
+  grCancelled          GoodsReceipt[]          @relation("GrCancelledBy")
+  soCreated            SalesOrder[]            @relation("SoCreatedBy")
+  soCancelled          SalesOrder[]            @relation("SoCancelledBy")
+  soClosed             SalesOrder[]            @relation("SoClosedBy")
+  soSalesperson        SalesOrder[]            @relation("SoSalesperson")
+  giCreated            GoodsIssue[]            @relation("GiCreatedBy")
+  giPosted             GoodsIssue[]            @relation("GiPostedBy")
+  giCancelled          GoodsIssue[]            @relation("GiCancelledBy")
+  adjCreated           InventoryAdjustment[]   @relation("AdjCreatedBy")
+  adjPosted            InventoryAdjustment[]   @relation("AdjPostedBy")
+  adjCancelled         InventoryAdjustment[]   @relation("AdjCancelledBy")
+  txnCreated           InventoryTransaction[]  @relation("TxnCreatedBy")
+  reconcileRuns        InventoryReconcileRun[] @relation("ReconcileRunBy")
+
+  @@map("app_user")
+}
+
+// ---------------------------------------------------------------------
+// 0. Master data
+// ---------------------------------------------------------------------
+model Currency {
+  code     String  @id @db.Char(3)
+  name     String  @db.VarChar(50)
+  decimals Int     @default(2) @db.SmallInt
+  isBase   Boolean @default(false) @map("is_base")
+
+  exchangeRates  ExchangeRate[]
+  suppliers      Supplier[]
+  customers      Customer[]
+  purchaseOrders PurchaseOrder[]
+  goodsReceipts  GoodsReceipt[]
+  salesOrders    SalesOrder[]
+
+  // Chỉ một đồng tiền gốc
+  @@unique([isBase], map: "uq_currency_single_base", where: raw("is_base"))
+  @@map("currency")
+}
+
+// Tỷ giá tham chiếu: chỉ để GỢI Ý khi lập chứng từ, không dùng tính lại lịch sử
+model ExchangeRate {
+  id           BigInt   @id @default(autoincrement())
+  currencyCode String   @map("currency_code") @db.Char(3)
+  rateDate     DateTime @map("rate_date") @db.Date
+  rate         Decimal  @db.Decimal(18, 6)
+  source       String?  @db.VarChar(30)
+  createdBy    BigInt?  @map("created_by")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  currency      Currency @relation(fields: [currencyCode], references: [code], onDelete: NoAction, onUpdate: NoAction)
+  createdByUser AppUser? @relation("ExchangeRateCreatedBy", fields: [createdBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([currencyCode, rateDate], map: "uq_exchange_rate")
+  @@map("exchange_rate")
+}
+
+model Supplier {
+  id              BigInt   @id @default(autoincrement())
+  code            String   @unique @db.VarChar(30)
+  name            String   @db.VarChar(255)
+  taxCode         String?  @map("tax_code") @db.VarChar(30)
+  countryCode     String?  @map("country_code") @db.Char(2)
+  defaultCurrency String?  @map("default_currency") @db.Char(3)
+  isActive        Boolean  @default(true) @map("is_active")
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  currency       Currency?       @relation(fields: [defaultCurrency], references: [code], onDelete: NoAction, onUpdate: NoAction)
+  purchaseOrders PurchaseOrder[]
+  goodsReceipts  GoodsReceipt[]
+
+  @@map("supplier")
+}
+
+model Customer {
+  id              BigInt   @id @default(autoincrement())
+  code            String   @unique @db.VarChar(30)
+  name            String   @db.VarChar(255)
+  taxCode         String?  @map("tax_code") @db.VarChar(30)
+  address         String?
+  countryCode     String?  @map("country_code") @db.Char(2)
+  defaultCurrency String?  @map("default_currency") @db.Char(3)
+  isActive        Boolean  @default(true) @map("is_active")
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  currency      Currency?      @relation(fields: [defaultCurrency], references: [code], onDelete: NoAction, onUpdate: NoAction)
+  salesOrders   SalesOrder[]
+  goodsReceipts GoodsReceipt[]
+
+  @@map("customer")
+}
+
+model Product {
+  id        BigInt   @id @default(autoincrement())
+  sku       String   @unique @db.VarChar(50)
+  name      String   @db.VarChar(255)
+  uom       String   @db.VarChar(20)
+  isActive  Boolean  @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  poItems           PurchaseOrderItem[]
+  grItems           GoodsReceiptItem[]
+  soItems           SalesOrderItem[]
+  giItems           GoodsIssueItem[]
+  adjItems          InventoryAdjustmentItem[]
+  balances          InventoryBalance[]
+  transactions      InventoryTransaction[]
+  reconcileRunLines InventoryReconcileRunLine[]
+
+  @@map("product")
+}
+
+model Warehouse {
+  id        BigInt   @id @default(autoincrement())
+  code      String   @unique @db.VarChar(30)
+  name      String   @db.VarChar(255)
+  address   String?
+  isActive  Boolean  @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  goodsReceipts      GoodsReceipt[]
+  goodsIssues        GoodsIssue[]
+  adjustments        InventoryAdjustment[]
+  balances           InventoryBalance[]
+  transactions       InventoryTransaction[]
+  salesOrdersDefault SalesOrder[]
+  reconcileRunLines  InventoryReconcileRunLine[]
+
+  @@map("warehouse")
+}
+
+// ---------------------------------------------------------------------
+// 1. Mua hàng / nhập khẩu
+// ---------------------------------------------------------------------
+model PurchaseOrder {
+  id                 BigInt    @id @default(autoincrement())
+  poNo               String    @unique @map("po_no") @db.VarChar(30)
+  supplierId         BigInt    @map("supplier_id")
+  orderDate          DateTime  @map("order_date") @db.Date
+  expectedDate       DateTime? @map("expected_date") @db.Date
+  currencyCode       String    @map("currency_code") @db.Char(3)
+  exchangeRate       Decimal   @map("exchange_rate") @db.Decimal(18, 6) // snapshot tại ngày PO
+  exchangeRateSource String?   @map("exchange_rate_source") @db.VarChar(100)
+  status             String    @default("DRAFT") @db.VarChar(20)
+  totalAmount        Decimal   @default(0) @map("total_amount") @db.Decimal(19, 4) // nguyên tệ
+  totalAmountBase    Decimal   @default(0) @map("total_amount_base") @db.Decimal(19, 4) // VND
+  terms              String?
+  note               String?
+  createdBy          BigInt?   @map("created_by")
+  createdAt          DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt          DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  cancelledAt        DateTime? @map("cancelled_at") @db.Timestamptz(6)
+  cancelledBy        BigInt?   @map("cancelled_by")
+  cancelReason       String?   @map("cancel_reason")
+  closedAt           DateTime? @map("closed_at") @db.Timestamptz(6)
+  closedBy           BigInt?   @map("closed_by")
+
+  supplier        Supplier            @relation(fields: [supplierId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  currency        Currency            @relation(fields: [currencyCode], references: [code], onDelete: NoAction, onUpdate: NoAction)
+  createdByUser   AppUser?            @relation("PoCreatedBy", fields: [createdBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  cancelledByUser AppUser?            @relation("PoCancelledBy", fields: [cancelledBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  closedByUser    AppUser?            @relation("PoClosedBy", fields: [closedBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  items           PurchaseOrderItem[]
+  goodsReceipts   GoodsReceipt[]
+
+  @@index([supplierId, orderDate], map: "ix_po_supplier_date")
+  @@index([status], map: "ix_po_status")
+  @@map("purchase_order")
+}
+
+model PurchaseOrderItem {
+  id          BigInt   @id @default(autoincrement())
+  poId        BigInt   @map("po_id")
+  lineNo      Int      @map("line_no")
+  productId   BigInt   @map("product_id")
+  qtyOrdered  Decimal  @map("qty_ordered") @db.Decimal(18, 4)
+  qtyReceived Decimal  @default(0) @map("qty_received") @db.Decimal(18, 4)
+  unitPrice   Decimal  @map("unit_price") @db.Decimal(19, 4) // nguyên tệ
+  /// GENERATED ALWAYS AS (qty_ordered * unit_price) STORED — chỉ đọc, không bao giờ ghi.
+  lineAmount  Decimal? @default(dbgenerated("(qty_ordered * unit_price)")) @map("line_amount") @db.Decimal(19, 4)
+
+  po      PurchaseOrder      @relation(fields: [poId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  product Product            @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  grItems GoodsReceiptItem[]
+
+  @@unique([poId, lineNo], map: "uq_po_item_line")
+  @@index([productId], map: "ix_po_item_product")
+  @@map("purchase_order_item")
+}
+
+model GoodsReceipt {
+  id           BigInt    @id @default(autoincrement())
+  grNo         String    @unique @map("gr_no") @db.VarChar(30)
+  receiptType  String    @default("PURCHASE") @map("receipt_type") @db.VarChar(20)
+  poId         BigInt?   @map("po_id") // bắt buộc khi receipt_type = PURCHASE
+  supplierId   BigInt?   @map("supplier_id")
+  customerId   BigInt?   @map("customer_id") // bắt buộc khi receipt_type = CUSTOMER_RETURN
+  soId         BigInt?   @map("so_id")
+  warehouseId  BigInt    @map("warehouse_id")
+  receiptDate  DateTime  @map("receipt_date") @db.Date
+  currencyCode String    @map("currency_code") @db.Char(3)
+  exchangeRate Decimal   @map("exchange_rate") @db.Decimal(18, 6) // tỷ giá thực tế ngày nhập
+  status       String    @default("DRAFT") @db.VarChar(20)
+  postedAt     DateTime? @map("posted_at") @db.Timestamptz(6)
+  postedBy     BigInt?   @map("posted_by")
+  note         String?
+  createdBy    BigInt?   @map("created_by")
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  cancelledAt  DateTime? @map("cancelled_at") @db.Timestamptz(6)
+  cancelledBy  BigInt?   @map("cancelled_by")
+  cancelReason String?   @map("cancel_reason")
+
+  po              PurchaseOrder?     @relation(fields: [poId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  supplier        Supplier?          @relation(fields: [supplierId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  customer        Customer?          @relation(fields: [customerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  so              SalesOrder?        @relation(fields: [soId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  warehouse       Warehouse          @relation(fields: [warehouseId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  currency        Currency           @relation(fields: [currencyCode], references: [code], onDelete: NoAction, onUpdate: NoAction)
+  createdByUser   AppUser?           @relation("GrCreatedBy", fields: [createdBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  postedByUser    AppUser?           @relation("GrPostedBy", fields: [postedBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  cancelledByUser AppUser?           @relation("GrCancelledBy", fields: [cancelledBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  items           GoodsReceiptItem[]
+
+  @@index([poId], map: "ix_gr_po")
+  @@index([warehouseId, receiptDate], map: "ix_gr_warehouse_date")
+  @@map("goods_receipt")
+}
+
+model GoodsReceiptItem {
+  id           BigInt  @id @default(autoincrement())
+  grId         BigInt  @map("gr_id")
+  lineNo       Int     @map("line_no")
+  poItemId     BigInt? @map("po_item_id")
+  productId    BigInt  @map("product_id")
+  qty          Decimal @db.Decimal(18, 4)
+  unitCost     Decimal @map("unit_cost") @db.Decimal(19, 4) // nguyên tệ
+  unitCostBase Decimal @map("unit_cost_base") @db.Decimal(19, 4) // VND = unit_cost * exchange_rate (đã làm tròn)
+
+  gr      GoodsReceipt       @relation(fields: [grId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  poItem  PurchaseOrderItem? @relation(fields: [poItemId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  product Product            @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([grId, lineNo], map: "uq_gr_item_line")
+  @@index([poItemId], map: "ix_gr_item_po_item")
+  @@index([productId], map: "ix_gr_item_product")
+  @@map("goods_receipt_item")
+}
+
+// ---------------------------------------------------------------------
+// 2. Bán hàng
+// ---------------------------------------------------------------------
+model SalesOrder {
+  id                 BigInt    @id @default(autoincrement())
+  soNo               String    @unique @map("so_no") @db.VarChar(30)
+  customerId         BigInt    @map("customer_id")
+  orderDate          DateTime  @map("order_date") @db.Date
+  currencyCode       String    @map("currency_code") @db.Char(3)
+  exchangeRate       Decimal   @map("exchange_rate") @db.Decimal(18, 6)
+  status             String    @default("DRAFT") @db.VarChar(20)
+  totalAmount        Decimal   @default(0) @map("total_amount") @db.Decimal(19, 4)
+  totalAmountBase    Decimal   @default(0) @map("total_amount_base") @db.Decimal(19, 4)
+  salespersonId      BigInt?   @map("salesperson_id")
+  shipToAddress      String?   @map("ship_to_address")
+  defaultWarehouseId BigInt?   @map("default_warehouse_id")
+  paymentTerms       String?   @map("payment_terms") @db.VarChar(255)
+  note               String?
+  createdBy          BigInt?   @map("created_by")
+  createdAt          DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt          DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+  cancelledAt        DateTime? @map("cancelled_at") @db.Timestamptz(6)
+  cancelledBy        BigInt?   @map("cancelled_by")
+  cancelReason       String?   @map("cancel_reason")
+  closedAt           DateTime? @map("closed_at") @db.Timestamptz(6)
+  closedBy           BigInt?   @map("closed_by")
+
+  customer         Customer         @relation(fields: [customerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  currency         Currency         @relation(fields: [currencyCode], references: [code], onDelete: NoAction, onUpdate: NoAction)
+  salesperson      AppUser?         @relation("SoSalesperson", fields: [salespersonId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  defaultWarehouse Warehouse?       @relation(fields: [defaultWarehouseId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  createdByUser    AppUser?         @relation("SoCreatedBy", fields: [createdBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  cancelledByUser  AppUser?         @relation("SoCancelledBy", fields: [cancelledBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  closedByUser     AppUser?         @relation("SoClosedBy", fields: [closedBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  items            SalesOrderItem[]
+  goodsIssues      GoodsIssue[]
+  returns          GoodsReceipt[]
+
+  @@index([customerId, orderDate], map: "ix_so_customer_date")
+  @@index([status], map: "ix_so_status")
+  @@map("sales_order")
+}
+
+model SalesOrderItem {
+  id         BigInt   @id @default(autoincrement())
+  soId       BigInt   @map("so_id")
+  lineNo     Int      @map("line_no")
+  productId  BigInt   @map("product_id")
+  qtyOrdered Decimal  @map("qty_ordered") @db.Decimal(18, 4)
+  qtyIssued  Decimal  @default(0) @map("qty_issued") @db.Decimal(18, 4)
+  unitPrice  Decimal  @map("unit_price") @db.Decimal(19, 4)
+  /// GENERATED ALWAYS AS (qty_ordered * unit_price) STORED — chỉ đọc, không bao giờ ghi.
+  lineAmount Decimal? @default(dbgenerated("(qty_ordered * unit_price)")) @map("line_amount") @db.Decimal(19, 4)
+
+  so      SalesOrder       @relation(fields: [soId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  product Product          @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  giItems GoodsIssueItem[]
+
+  @@unique([soId, lineNo], map: "uq_so_item_line")
+  @@index([productId], map: "ix_so_item_product")
+  @@map("sales_order_item")
+}
+
+model GoodsIssue {
+  id           BigInt    @id @default(autoincrement())
+  giNo         String    @unique @map("gi_no") @db.VarChar(30)
+  soId         BigInt?   @map("so_id") // 1 SO : N GI
+  warehouseId  BigInt    @map("warehouse_id")
+  issueDate    DateTime  @map("issue_date") @db.Date
+  status       String    @default("DRAFT") @db.VarChar(20)
+  postedAt     DateTime? @map("posted_at") @db.Timestamptz(6)
+  postedBy     BigInt?   @map("posted_by")
+  note         String?
+  createdBy    BigInt?   @map("created_by")
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  cancelledAt  DateTime? @map("cancelled_at") @db.Timestamptz(6)
+  cancelledBy  BigInt?   @map("cancelled_by")
+  cancelReason String?   @map("cancel_reason")
+
+  so              SalesOrder?      @relation(fields: [soId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  warehouse       Warehouse        @relation(fields: [warehouseId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  createdByUser   AppUser?         @relation("GiCreatedBy", fields: [createdBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  postedByUser    AppUser?         @relation("GiPostedBy", fields: [postedBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  cancelledByUser AppUser?         @relation("GiCancelledBy", fields: [cancelledBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  items           GoodsIssueItem[]
+
+  @@index([soId], map: "ix_gi_so")
+  @@index([warehouseId, issueDate], map: "ix_gi_warehouse_date")
+  @@map("goods_issue")
+}
+
+model GoodsIssueItem {
+  id           BigInt   @id @default(autoincrement())
+  giId         BigInt   @map("gi_id")
+  lineNo       Int      @map("line_no")
+  soItemId     BigInt?  @map("so_item_id")
+  productId    BigInt   @map("product_id")
+  qty          Decimal  @db.Decimal(18, 4)
+  unitCostBase Decimal? @map("unit_cost_base") @db.Decimal(19, 4) // giá vốn VND, ghi nhận lúc POST
+
+  gi      GoodsIssue      @relation(fields: [giId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  soItem  SalesOrderItem? @relation(fields: [soItemId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  product Product         @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([giId, lineNo], map: "uq_gi_item_line")
+  @@index([soItemId], map: "ix_gi_item_so_item")
+  @@index([productId], map: "ix_gi_item_product")
+  @@map("goods_issue_item")
+}
+
+// ---------------------------------------------------------------------
+// 3. Kho
+// ---------------------------------------------------------------------
+model InventoryAdjustment {
+  id           BigInt    @id @default(autoincrement())
+  adjNo        String    @unique @map("adj_no") @db.VarChar(30)
+  warehouseId  BigInt    @map("warehouse_id")
+  adjDate      DateTime  @map("adj_date") @db.Date
+  reason       String    @db.VarChar(50) // STOCKTAKE, DAMAGED, LOST, OTHER
+  status       String    @default("DRAFT") @db.VarChar(20)
+  postedAt     DateTime? @map("posted_at") @db.Timestamptz(6)
+  postedBy     BigInt?   @map("posted_by")
+  note         String?
+  createdBy    BigInt?   @map("created_by")
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  cancelledAt  DateTime? @map("cancelled_at") @db.Timestamptz(6)
+  cancelledBy  BigInt?   @map("cancelled_by")
+  cancelReason String?   @map("cancel_reason")
+
+  warehouse       Warehouse                 @relation(fields: [warehouseId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  createdByUser   AppUser?                  @relation("AdjCreatedBy", fields: [createdBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  postedByUser    AppUser?                  @relation("AdjPostedBy", fields: [postedBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  cancelledByUser AppUser?                  @relation("AdjCancelledBy", fields: [cancelledBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  items           InventoryAdjustmentItem[]
+
+  @@map("inventory_adjustment")
+}
+
+model InventoryAdjustmentItem {
+  id           BigInt   @id @default(autoincrement())
+  adjId        BigInt   @map("adj_id")
+  lineNo       Int      @map("line_no")
+  productId    BigInt   @map("product_id")
+  qtySystem    Decimal  @map("qty_system") @db.Decimal(18, 4) // tồn hệ thống lúc lập phiếu
+  qtyCounted   Decimal? @map("qty_counted") @db.Decimal(18, 4) // số đếm thực tế (kiểm kê)
+  qtyChange    Decimal  @map("qty_change") @db.Decimal(18, 4) // + tăng / - giảm
+  unitCostBase Decimal? @map("unit_cost_base") @db.Decimal(19, 4)
+
+  adj     InventoryAdjustment @relation(fields: [adjId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  product Product             @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([adjId, lineNo], map: "uq_adj_item_line")
+  @@map("inventory_adjustment_item")
+}
+
+// Tồn kho HIỆN TẠI theo (sản phẩm, kho) – "điểm khóa" khi cập nhật đồng thời
+model InventoryBalance {
+  productId   BigInt   @map("product_id")
+  warehouseId BigInt   @map("warehouse_id")
+  qtyOnHand   Decimal  @default(0) @map("qty_on_hand") @db.Decimal(18, 4)
+  avgCost     Decimal  @default(0) @map("avg_cost") @db.Decimal(19, 4) // giá vốn bình quân gia quyền (VND)
+  updatedAt   DateTime @default(now()) @map("updated_at") @db.Timestamptz(6)
+
+  product   Product   @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  warehouse Warehouse @relation(fields: [warehouseId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([productId, warehouseId], map: "pk_inventory_balance")
+  @@index([warehouseId], map: "ix_inv_balance_warehouse")
+  @@map("inventory_balance")
+}
+
+// Sổ cái kho – APPEND-ONLY (trigger chặn UPDATE/DELETE)
+model InventoryTransaction {
+  id           BigInt   @id @default(autoincrement())
+  productId    BigInt   @map("product_id")
+  warehouseId  BigInt   @map("warehouse_id")
+  txnType      String   @map("txn_type") @db.VarChar(20)
+  qtyChange    Decimal  @map("qty_change") @db.Decimal(18, 4) // có dấu: + nhập, - xuất
+  qtyAfter     Decimal  @map("qty_after") @db.Decimal(18, 4) // tồn sau giao dịch
+  unitCostBase Decimal? @map("unit_cost_base") @db.Decimal(19, 4)
+  refType      String   @map("ref_type") @db.VarChar(10)
+  refId        BigInt   @map("ref_id")
+  refLineId    BigInt   @map("ref_line_id")
+  txnAt        DateTime @default(now()) @map("txn_at") @db.Timestamptz(6)
+  createdBy    BigInt?  @map("created_by")
+  note         String?
+
+  product       Product   @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  warehouse     Warehouse @relation(fields: [warehouseId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  createdByUser AppUser?  @relation("TxnCreatedBy", fields: [createdBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  // Idempotency: một dòng chứng từ chỉ sinh đúng 1 bút toán kho
+  @@unique([refType, refLineId, txnType], map: "uq_inv_txn_ref_line")
+  @@index([productId, warehouseId, txnAt, id], map: "ix_inv_txn_product_wh_time")
+  @@index([refType, refId], map: "ix_inv_txn_ref")
+  @@index([txnAt], map: "ix_inv_txn_time")
+  @@map("inventory_transaction")
+}
+
+// Lịch sử các lần chạy đối soát (bổ sung)
+model InventoryReconcileRun {
+  id           BigInt   @id @default(autoincrement())
+  runAt        DateTime @default(now()) @map("run_at") @db.Timestamptz(6)
+  runBy        BigInt?  @map("run_by")
+  pairsChecked Int      @map("pairs_checked")
+  matched      Int
+  mismatched   Int
+  durationMs   Int      @map("duration_ms")
+
+  runByUser AppUser?                    @relation("ReconcileRunBy", fields: [runBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  lines     InventoryReconcileRunLine[]
+
+  @@index([runAt], map: "ix_reconcile_run_time")
+  @@map("inventory_reconcile_run")
+}
+
+// Chỉ lưu các cặp (sản phẩm, kho) bị lệch trong lần chạy
+model InventoryReconcileRunLine {
+  id          BigInt  @id @default(autoincrement())
+  runId       BigInt  @map("run_id")
+  productId   BigInt  @map("product_id")
+  warehouseId BigInt  @map("warehouse_id")
+  qtyOnHand   Decimal @map("qty_on_hand") @db.Decimal(18, 4)
+  ledgerQty   Decimal @map("ledger_qty") @db.Decimal(18, 4)
+  diff        Decimal @db.Decimal(18, 4)
+  txnCount    Int     @map("txn_count")
+
+  run       InventoryReconcileRun @relation(fields: [runId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  product   Product               @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  warehouse Warehouse             @relation(fields: [warehouseId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("inventory_reconcile_run_line")
+}
+
+// Cấp số chứng từ PO-yyyy-nnnn… (bổ sung)
+model DocSequence {
+  docType   String @map("doc_type") @db.VarChar(10)
+  year      Int
+  lastValue Int    @default(0) @map("last_value")
+
+  @@id([docType, year], map: "pk_doc_sequence")
+  @@map("doc_sequence")
 }
