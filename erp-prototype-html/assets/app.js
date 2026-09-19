@@ -20,3 +20,9 @@ document.addEventListener('click', (event) => {
     });
   }
 });
+
+// Link trực tiếp tới modal, ví dụ products.html#m-product-new
+window.addEventListener('DOMContentLoaded', () => {
+  const dialog = location.hash && document.querySelector(`dialog${location.hash}`);
+  if (dialog) dialog.showModal();
+});

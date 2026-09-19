@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Khách hàng | ERP prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="../assets/styles.css">
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="app">
+<nav class="sidebar" aria-label="Điều hướng chính">
+<div class="brand"><div class="brand-logo"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M3 7 L10 3 L17 7 V15 L10 18 L3 15 Z"></path><path d="M3 7 L10 11 L17 7"></path><line x1="10" y1="11" x2="10" y2="18"></line></svg></div><div class="field"><span class="brand-name">[Tên công ty]</span><span class="text-xs">Mua hàng, kho, bán hàng</span></div></div>
+<div class="nav-group"><a class="nav-link" href="../index.html">Tổng quan</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--purchase"></span>Mua hàng</div>
+<a class="nav-link nav-link--sub" href="../purchase/orders.html">Đơn mua hàng</a>
+<a class="nav-link nav-link--sub" href="../purchase/order-new.html">Tạo đơn mua</a>
+<a class="nav-link nav-link--sub" href="../purchase/receipts.html">Phiếu nhập kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--sales"></span>Bán hàng</div>
+<a class="nav-link nav-link--sub" href="../sales/orders.html">Đơn bán hàng</a>
+<a class="nav-link nav-link--sub" href="../sales/issues.html">Phiếu xuất kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--inventory"></span>Kho</div>
+<a class="nav-link nav-link--sub" href="../inventory/balances.html">Tồn kho</a>
+<a class="nav-link nav-link--sub" href="../inventory/stock-card.html">Thẻ kho</a>
+<a class="nav-link nav-link--sub" href="../inventory/adjustments.html">Kiểm kê, điều chỉnh</a>
+<a class="nav-link nav-link--sub" href="../inventory/reconcile.html">Đối soát tồn kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--master"></span>Danh mục</div>
+<a class="nav-link nav-link--sub" href="../master/products.html">Sản phẩm</a>
+<a class="nav-link nav-link--sub" href="../master/warehouses.html">Kho hàng</a>
+<a class="nav-link nav-link--sub" href="../master/suppliers.html">Nhà cung cấp</a>
+<a class="nav-link nav-link--sub" href="../master/customers.html" aria-current="page">Khách hàng</a>
+<a class="nav-link nav-link--sub" href="../master/currencies.html">Tiền tệ và tỷ giá</a></div>
+</nav>
+<div class="content">
+<header class="topbar"><div class="search"><svg class="search-icon" width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#566575" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><line x1="13.5" y1="13.5" x2="17" y2="17"></line></svg><input class="input input--search" type="search" aria-label="Tìm kiếm" placeholder="Tìm số chứng từ, mã hàng, đối tác"></div><div class="user"><div class="user-meta"><span class="user-name">Nguyễn Thu Hà</span><span class="text-xs">Kế toán</span></div><div class="avatar" aria-hidden="true">TH</div></div></header>
+<main class="main">
+<div class="page-head"><div>
+<div class="breadcrumb">Danh mục <span aria-hidden="true" class="faint">/</span> Khách hàng</div>
+<div class="row"><h1 class="page-title">Khách hàng</h1></div></div>
+<div class="actions"><button type="button" class="btn">Xuất Excel</button><button type="button" class="btn btn--primary" data-open="m-cus-new"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><line x1="10" y1="4" x2="10" y2="16"></line><line x1="4" y1="10" x2="16" y2="10"></line></svg>Thêm khách hàng</button></div></div>
+<div class="card card--compact">
+<div style="display: grid; grid-template-columns: 2fr 1.2fr auto; gap: 16px;">
+<div class="field"><label for="cu-f-q" class="field-label">Tìm kiếm</label><input id="cu-f-q" type="text" value="" placeholder="Mã, tên hoặc mã số thuế" class="input"></div>
+<div class="field"><label for="cu-f-st" class="field-label">Trạng thái</label><select id="cu-f-st" class="input"><option selected>Tất cả</option><option>Đang dùng</option><option>Ngừng dùng</option></select></div>
+<div style="display: flex; align-items: flex-end;"><button type="button" class="btn">Lọc</button></div></div></div>
+<div class="card">
+<table class="table"><thead><tr><th scope="col">Mã khách hàng</th><th scope="col">Tên khách hàng</th><th scope="col">Mã số thuế</th><th scope="col" class="num">Đơn bán đang mở</th><th scope="col">Trạng thái</th><th scope="col"></th></tr></thead><tbody>
+<tr><td><span class="fw-600">KH-MINHPHAT</span></td><td>Công ty TNHH Minh Phát</td><td>0102345678</td><td class="num">1</td><td><span class="badge badge--success">Đang dùng</span></td><td><button type="button" class="btn btn--sm" data-open="m-cus-edit" aria-label="Sửa KH-MINHPHAT">Sửa</button></td></tr>
+<tr><td><span class="fw-600">KH-HAINAM</span></td><td>Cửa hàng Tin học Hải Nam</td><td>8012345678</td><td class="num">1</td><td><span class="badge badge--success">Đang dùng</span></td><td><button type="button" class="btn btn--sm" data-open="m-cus-edit" aria-label="Sửa KH-HAINAM">Sửa</button></td></tr>
+<tr><td><span class="fw-600">KH-ANKHANG</span></td><td>Công ty CP Giải pháp An Khang</td><td>0107654321</td><td class="num">1</td><td><span class="badge badge--success">Đang dùng</span></td><td><button type="button" class="btn btn--sm" data-open="m-cus-edit" aria-label="Sửa KH-ANKHANG">Sửa</button></td></tr>
+<tr><td><span class="fw-600">KH-SAOVIET</span></td><td>Công ty TNHH Thương mại Sao Việt</td><td>0313456789</td><td class="num">1</td><td><span class="badge badge--success">Đang dùng</span></td><td><button type="button" class="btn btn--sm" data-open="m-cus-edit" aria-label="Sửa KH-SAOVIET">Sửa</button></td></tr>
+<tr><td><span class="fw-600">KH-PHUCLONG</span></td><td>Công ty CP Công nghệ Phúc Long</td><td>0314567890</td><td class="num">0</td><td><span class="badge badge--success">Đang dùng</span></td><td><button type="button" class="btn btn--sm" data-open="m-cus-edit" aria-label="Sửa KH-PHUCLONG">Sửa</button></td></tr>
+<tr><td><span class="fw-600">KH-TECHPARTNER</span></td><td>Tech Partner Pte. Ltd</td><td><span class="faint">—</span></td><td class="num">0</td><td><span class="badge badge--success">Đang dùng</span></td><td><button type="button" class="btn btn--sm" data-open="m-cus-edit" aria-label="Sửa KH-TECHPARTNER">Sửa</button></td></tr>
+<tr><td><span class="fw-600">KH-LE</span></td><td>Khách lẻ</td><td><span class="faint">—</span></td><td class="num">0</td><td><span class="badge badge--success">Đang dùng</span></td><td><button type="button" class="btn btn--sm" data-open="m-cus-edit" aria-label="Sửa KH-LE">Sửa</button></td></tr>
+<tr><td><span class="fw-600">KH-BACHKHOA</span></td><td>Cửa hàng Máy tính Bách Khoa</td><td>0105556667</td><td class="num">0</td><td><span class="badge badge--muted">Ngừng dùng</span></td><td><button type="button" class="btn btn--sm" data-open="m-cus-edit" aria-label="Sửa KH-BACHKHOA">Sửa</button></td></tr>
+</tbody></table>
+<div class="table-foot"><span>Hiển thị 1–8 trong 214 khách hàng</span>
+<div class="row-8"><button type="button" class="btn btn--sm" disabled>Trang trước</button><button type="button" class="btn btn--sm">Trang sau</button></div></div></div>
+<dialog id="m-cus-new" class="modal" aria-labelledby="m-cus-new-title">
+<form method="dialog">
+<div class="modal-head"><h2 id="m-cus-new-title" class="card-title">Thêm khách hàng</h2><button type="button" class="btn btn--sm btn--icon" data-close aria-label="Đóng"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><line x1="5" y1="5" x2="15" y2="15"></line><line x1="15" y1="5" x2="5" y2="15"></line></svg></button></div>
+<div class="modal-body">
+<div class="field"><label for="cn-code" class="field-label">Mã khách hàng</label><input id="cn-code" type="text" value="" placeholder="VD: KH-VIETTIN" class="input"></div>
+<div class="field"><label for="cn-tax" class="field-label">Mã số thuế</label><input id="cn-tax" type="text" value="" placeholder="10 hoặc 13 chữ số" class="input"></div>
+<div class="field span-2"><label for="cn-name" class="field-label">Tên khách hàng</label><input id="cn-name" type="text" value="" class="input"></div>
+<div class="span-2"><label for="cn-active" class="check"><input id="cn-active" type="checkbox" checked>Đang giao dịch</label></div>
+</div>
+<div class="modal-foot"><button type="button" class="btn" data-close>Hủy</button><button type="submit" class="btn btn--primary">Lưu</button></div>
+</form>
+</dialog>
+<dialog id="m-cus-edit" class="modal" aria-labelledby="m-cus-edit-title">
+<form method="dialog">
+<div class="modal-head"><h2 id="m-cus-edit-title" class="card-title">Sửa khách hàng KH-MINHPHAT</h2><button type="button" class="btn btn--sm btn--icon" data-close aria-label="Đóng"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><line x1="5" y1="5" x2="15" y2="15"></line><line x1="15" y1="5" x2="5" y2="15"></line></svg></button></div>
+<div class="modal-body">
+<div class="field"><label for="ce-code" class="field-label">Mã khách hàng</label><input id="ce-code" type="text" value="KH-MINHPHAT" readonly class="input input--readonly"></div>
+<div class="field"><label for="ce-tax" class="field-label">Mã số thuế</label><input id="ce-tax" type="text" value="010234567" class="input input--invalid" aria-invalid="true" aria-describedby="ce-tax-err"><div id="ce-tax-err" class="field-error">Mã số thuế phải có 10 hoặc 13 chữ số; đang có 9. Kiểm tra lại trên giấy đăng ký kinh doanh.</div></div>
+<div class="field span-2"><label for="ce-name" class="field-label">Tên khách hàng</label><input id="ce-name" type="text" value="Công ty TNHH Minh Phát" class="input"></div>
+<div class="span-2"><label for="ce-active" class="check"><input id="ce-active" type="checkbox" checked>Đang giao dịch</label></div>
+</div>
+<div class="modal-foot"><button type="button" class="btn" data-close>Hủy</button><button type="submit" class="btn btn--primary">Lưu thay đổi</button></div>
+</form>
+</dialog>
+</main>
+</div>
+</div>
+</body>
+</html>

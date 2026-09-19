@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Đối soát tồn kho | ERP prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<div class="app">
+<nav class="sidebar" aria-label="Điều hướng chính">
+<div class="brand"><div class="brand-logo"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M3 7 L10 3 L17 7 V15 L10 18 L3 15 Z"></path><path d="M3 7 L10 11 L17 7"></path><line x1="10" y1="11" x2="10" y2="18"></line></svg></div><div class="field"><span class="brand-name">[Tên công ty]</span><span class="text-xs">Mua hàng, kho, bán hàng</span></div></div>
+<div class="nav-group"><a class="nav-link" href="../index.html">Tổng quan</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--purchase"></span>Mua hàng</div>
+<a class="nav-link nav-link--sub" href="../purchase/orders.html">Đơn mua hàng</a>
+<a class="nav-link nav-link--sub" href="../purchase/order-new.html">Tạo đơn mua</a>
+<a class="nav-link nav-link--sub" href="../purchase/receipts.html">Phiếu nhập kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--sales"></span>Bán hàng</div>
+<a class="nav-link nav-link--sub" href="../sales/orders.html">Đơn bán hàng</a>
+<a class="nav-link nav-link--sub" href="../sales/issues.html">Phiếu xuất kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--inventory"></span>Kho</div>
+<a class="nav-link nav-link--sub" href="../inventory/balances.html">Tồn kho</a>
+<a class="nav-link nav-link--sub" href="../inventory/stock-card.html">Thẻ kho</a>
+<a class="nav-link nav-link--sub" href="../inventory/adjustments.html">Kiểm kê, điều chỉnh</a>
+<a class="nav-link nav-link--sub" href="../inventory/reconcile.html" aria-current="page">Đối soát tồn kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--master"></span>Danh mục</div>
+<a class="nav-link nav-link--sub" href="../master/products.html">Sản phẩm</a>
+<a class="nav-link nav-link--sub" href="../master/warehouses.html">Kho hàng</a>
+<a class="nav-link nav-link--sub" href="../master/suppliers.html">Nhà cung cấp</a>
+<a class="nav-link nav-link--sub" href="../master/customers.html">Khách hàng</a>
+<a class="nav-link nav-link--sub" href="../master/currencies.html">Tiền tệ và tỷ giá</a></div>
+</nav>
+<div class="content">
+<header class="topbar"><div class="search"><svg class="search-icon" width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#566575" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><line x1="13.5" y1="13.5" x2="17" y2="17"></line></svg><input class="input input--search" type="search" aria-label="Tìm kiếm" placeholder="Tìm số chứng từ, mã hàng, đối tác"></div><div class="user"><div class="user-meta"><span class="user-name">Nguyễn Thu Hà</span><span class="text-xs">Quản lý kho</span></div><div class="avatar" aria-hidden="true">TH</div></div></header>
+<main class="main">
+<div class="page-head"><div>
+<div class="breadcrumb">Kho <span aria-hidden="true" class="faint">/</span> Đối soát tồn kho</div>
+<div class="row"><h1 class="page-title">Đối soát tồn kho</h1></div>
+<div class="page-sub">So sánh tồn hiện tại với tổng mọi biến động trên sổ cái kho. Hai số phải luôn bằng nhau.</div></div>
+<div class="actions"><button type="button" class="btn">Xuất Excel</button><button type="button" class="btn btn--primary">Chạy đối soát ngay</button></div></div>
+<div class="grid-4">
+<div class="card">
+<div class="stat-label">Cặp sản phẩm, kho được kiểm tra</div><div class="stat-value">212</div><div class="stat-note">4 kho đang dùng, 146 mã hàng</div></div>
+<div class="card">
+<div class="stat-label">Khớp</div><div class="stat-value">212</div><div class="stat-note">100%</div></div>
+<div class="card">
+<div class="stat-label">Lệch</div><div class="stat-value">0</div><div class="stat-note">Không cần xử lý</div></div>
+<div class="card">
+<div class="stat-label">Lần chạy gần nhất</div><div class="stat-value">11:00</div><div class="stat-note">19/09/2026, chạy tự động mỗi giờ</div></div>
+</div>
+<div class="alert alert--success" role="status"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><circle cx="10" cy="10" r="8"></circle><polyline points="6.5,10.5 9,13 13.5,7.5"></polyline></svg><div>Tất cả 212 cặp sản phẩm, kho đều khớp giữa tồn hiện tại và sổ cái kho tại lần chạy 19/09/2026 11:00.</div></div>
+<div class="card">
+<div class="card-head">
+<h2 class="card-title">Kết quả chi tiết</h2><select id="rc-f" class="input" aria-label="Lọc kết quả" style="width: 200px;"><option selected>Hiện tất cả</option><option>Chỉ dòng lệch</option></select></div>
+<table class="table"><thead><tr><th scope="col">Mã hàng</th><th scope="col">Tên hàng</th><th scope="col">Kho</th><th scope="col" class="num">Tồn hiện tại</th><th scope="col" class="num">Tổng sổ cái</th><th scope="col" class="num">Chênh lệch</th><th scope="col" class="num">Số bút toán</th><th scope="col">Kết quả</th><th scope="col"></th></tr></thead><tbody>
+<tr><td><span class="fw-600">BP-K120</span></td><td>Bàn phím cơ K120</td><td>Kho Hà Nội</td><td class="num"><span class="fw-700">80</span></td><td class="num">80</td><td class="num"><span class="muted">0</span></td><td class="num">3</td><td><span class="badge badge--success">Khớp</span></td><td><a href="../inventory/stock-card.html" class="link-strong">Thẻ kho</a></td></tr>
+<tr><td><span class="fw-600">BP-K120</span></td><td>Bàn phím cơ K120</td><td>Kho TP.HCM</td><td class="num"><span class="fw-700">45</span></td><td class="num">45</td><td class="num"><span class="muted">0</span></td><td class="num">4</td><td><span class="badge badge--success">Khớp</span></td><td><a href="../inventory/stock-card.html" class="link-strong">Thẻ kho</a></td></tr>
+<tr><td><span class="fw-600">CH-M50</span></td><td>Chuột không dây M50</td><td>Kho Hà Nội</td><td class="num"><span class="fw-700">150</span></td><td class="num">150</td><td class="num"><span class="muted">0</span></td><td class="num">5</td><td><span class="badge badge--success">Khớp</span></td><td><a href="../inventory/stock-card.html" class="link-strong">Thẻ kho</a></td></tr>
+<tr><td><span class="fw-600">CH-M50</span></td><td>Chuột không dây M50</td><td>Kho TP.HCM</td><td class="num"><span class="fw-700">215</span></td><td class="num">215</td><td class="num"><span class="muted">0</span></td><td class="num">7</td><td><span class="badge badge--success">Khớp</span></td><td><a href="../inventory/stock-card.html" class="link-strong">Thẻ kho</a></td></tr>
+<tr><td><span class="fw-600">MN-24F</span></td><td>Màn hình 24 inch F24</td><td>Kho Hà Nội</td><td class="num"><span class="fw-700">6</span></td><td class="num">6</td><td class="num"><span class="muted">0</span></td><td class="num">4</td><td><span class="badge badge--success">Khớp</span></td><td><a href="../inventory/stock-card.html" class="link-strong">Thẻ kho</a></td></tr>
+<tr><td><span class="fw-600">TN-H3</span></td><td>Tai nghe H3</td><td>Kho Hà Nội</td><td class="num"><span class="fw-700">34</span></td><td class="num">34</td><td class="num"><span class="muted">0</span></td><td class="num">3</td><td><span class="badge badge--success">Khớp</span></td><td><a href="../inventory/stock-card.html" class="link-strong">Thẻ kho</a></td></tr>
+<tr><td><span class="fw-600">TN-H3</span></td><td>Tai nghe H3</td><td>Kho TP.HCM</td><td class="num"><span class="fw-700">0</span></td><td class="num">0</td><td class="num"><span class="muted">0</span></td><td class="num">2</td><td><span class="badge badge--success">Khớp</span></td><td><a href="../inventory/stock-card.html" class="link-strong">Thẻ kho</a></td></tr>
+</tbody></table>
+<div class="table-foot"><span>Hiển thị 1–7 trong 212 cặp sản phẩm, kho</span>
+<div class="row-8"><button type="button" class="btn btn--sm" disabled>Trang trước</button><button type="button" class="btn btn--sm">Trang sau</button></div></div></div>
+<div class="alert" role="status"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><circle cx="10" cy="10" r="8"></circle><line x1="10" y1="9" x2="10" y2="14"></line><line x1="10" y1="6" x2="10" y2="6.5"></line></svg><div>Nếu có dòng lệch: không sửa trực tiếp số tồn. Mở thẻ kho để tìm bút toán gây lệch, báo quản trị hệ thống, sau đó lập phiếu điều chỉnh để đưa tồn về đúng.</div></div>
+</main>
+</div>
+</div>
+</body>
+</html>

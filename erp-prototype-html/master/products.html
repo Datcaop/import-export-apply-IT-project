@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sản phẩm | ERP prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="../assets/styles.css">
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="app">
+<nav class="sidebar" aria-label="Điều hướng chính">
+<div class="brand"><div class="brand-logo"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M3 7 L10 3 L17 7 V15 L10 18 L3 15 Z"></path><path d="M3 7 L10 11 L17 7"></path><line x1="10" y1="11" x2="10" y2="18"></line></svg></div><div class="field"><span class="brand-name">[Tên công ty]</span><span class="text-xs">Mua hàng, kho, bán hàng</span></div></div>
+<div class="nav-group"><a class="nav-link" href="../index.html">Tổng quan</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--purchase"></span>Mua hàng</div>
+<a class="nav-link nav-link--sub" href="../purchase/orders.html">Đơn mua hàng</a>
+<a class="nav-link nav-link--sub" href="../purchase/order-new.html">Tạo đơn mua</a>
+<a class="nav-link nav-link--sub" href="../purchase/receipts.html">Phiếu nhập kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--sales"></span>Bán hàng</div>
+<a class="nav-link nav-link--sub" href="../sales/orders.html">Đơn bán hàng</a>
+<a class="nav-link nav-link--sub" href="../sales/issues.html">Phiếu xuất kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--inventory"></span>Kho</div>
+<a class="nav-link nav-link--sub" href="../inventory/balances.html">Tồn kho</a>
+<a class="nav-link nav-link--sub" href="../inventory/stock-card.html">Thẻ kho</a>
+<a class="nav-link nav-link--sub" href="../inventory/adjustments.html">Kiểm kê, điều chỉnh</a>
+<a class="nav-link nav-link--sub" href="../inventory/reconcile.html">Đối soát tồn kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--master"></span>Danh mục</div>
+<a class="nav-link nav-link--sub" href="../master/products.html" aria-current="page">Sản phẩm</a>
+<a class="nav-link nav-link--sub" href="../master/warehouses.html">Kho hàng</a>
+<a class="nav-link nav-link--sub" href="../master/suppliers.html">Nhà cung cấp</a>
+<a class="nav-link nav-link--sub" href="../master/customers.html">Khách hàng</a>
+<a class="nav-link nav-link--sub" href="../master/currencies.html">Tiền tệ và tỷ giá</a></div>
+</nav>
+<div class="content">
+<header class="topbar"><div class="search"><svg class="search-icon" width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#566575" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><line x1="13.5" y1="13.5" x2="17" y2="17"></line></svg><input class="input input--search" type="search" aria-label="Tìm kiếm" placeholder="Tìm số chứng từ, mã hàng, đối tác"></div><div class="user"><div class="user-meta"><span class="user-name">Nguyễn Thu Hà</span><span class="text-xs">Kế toán</span></div><div class="avatar" aria-hidden="true">TH</div></div></header>
+<main class="main">
+<div class="page-head"><div>
+<div class="breadcrumb">Danh mục <span aria-hidden="true" class="faint">/</span> Sản phẩm</div>
+<div class="row"><h1 class="page-title">Sản phẩm</h1></div></div>
+<div class="actions"><button type="button" class="btn">Xuất Excel</button><button type="button" class="btn btn--primary" data-open="m-product-new"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><line x1="10" y1="4" x2="10" y2="16"></line><line x1="4" y1="10" x2="16" y2="10"></line></svg>Thêm sản phẩm</button></div></div>
+<div class="card card--compact">
+<div style="display: grid; grid-template-columns: 2fr 1.2fr auto; gap: 16px;">
+<div class="field"><label for="pr-f-q" class="field-label">Tìm kiếm</label><input id="pr-f-q" type="text" value="" placeholder="Mã hoặc tên hàng" class="input"></div>
+<div class="field"><label for="pr-f-st" class="field-label">Trạng thái</label><select id="pr-f-st" class="input"><option selected>Tất cả</option><option>Đang dùng</option><option>Ngừng dùng</option></select></div>
+<div style="display: flex; align-items: flex-end;"><button type="button" class="btn">Lọc</button></div></div></div>
+<div class="card">
+<table class="table"><thead><tr><th scope="col">Mã hàng</th><th scope="col">Tên hàng</th><th scope="col">ĐVT</th><th scope="col" class="num">Tồn Kho Hà Nội</th><th scope="col" class="num">Tồn Kho TP.HCM</th><th scope="col">Trạng thái</th><th scope="col">Cập nhật</th><th scope="col"></th></tr></thead><tbody>
+<tr><td><span class="fw-600">BP-K120</span></td><td>Bàn phím cơ K120</td><td>Cái</td><td class="num">80</td><td class="num">45</td><td><span class="badge badge--success">Đang dùng</span></td><td>02/09/2026</td><td><button type="button" class="btn btn--sm" data-open="m-product-edit" aria-label="Sửa BP-K120">Sửa</button></td></tr>
+<tr><td><span class="fw-600">CH-M50</span></td><td>Chuột không dây M50</td><td>Cái</td><td class="num">150</td><td class="num">215</td><td><span class="badge badge--success">Đang dùng</span></td><td>02/09/2026</td><td><button type="button" class="btn btn--sm" data-open="m-product-edit" aria-label="Sửa CH-M50">Sửa</button></td></tr>
+<tr><td><span class="fw-600">TN-H3</span></td><td>Tai nghe H3</td><td>Cái</td><td class="num">34</td><td class="num">0</td><td><span class="badge badge--success">Đang dùng</span></td><td>28/08/2026</td><td><button type="button" class="btn btn--sm" data-open="m-product-edit" aria-label="Sửa TN-H3">Sửa</button></td></tr>
+<tr><td><span class="fw-600">MN-24F</span></td><td>Màn hình 24 inch F24</td><td>Cái</td><td class="num">6</td><td class="num">0</td><td><span class="badge badge--success">Đang dùng</span></td><td>28/08/2026</td><td><button type="button" class="btn btn--sm" data-open="m-product-edit" aria-label="Sửa MN-24F">Sửa</button></td></tr>
+<tr><td><span class="fw-600">CAP-C1</span></td><td>Cáp USB-C 1m</td><td>Cái</td><td class="num">480</td><td class="num">0</td><td><span class="badge badge--success">Đang dùng</span></td><td>20/08/2026</td><td><button type="button" class="btn btn--sm" data-open="m-product-edit" aria-label="Sửa CAP-C1">Sửa</button></td></tr>
+<tr><td><span class="fw-600">DE-L2</span></td><td>Đế tản nhiệt laptop L2</td><td>Cái</td><td class="num">65</td><td class="num">0</td><td><span class="badge badge--success">Đang dùng</span></td><td>15/08/2026</td><td><button type="button" class="btn btn--sm" data-open="m-product-edit" aria-label="Sửa DE-L2">Sửa</button></td></tr>
+<tr><td><span class="fw-600">HUB-U4</span></td><td>Bộ chia USB 4 cổng</td><td>Cái</td><td class="num">0</td><td class="num">23</td><td><span class="badge badge--success">Đang dùng</span></td><td>10/08/2026</td><td><button type="button" class="btn btn--sm" data-open="m-product-edit" aria-label="Sửa HUB-U4">Sửa</button></td></tr>
+<tr><td><span class="fw-600">BL-P01</span></td><td>Balo laptop P01</td><td>Cái</td><td class="num">0</td><td class="num">0</td><td><span class="badge badge--muted">Ngừng dùng</span></td><td>01/07/2026</td><td><button type="button" class="btn btn--sm" data-open="m-product-edit" aria-label="Sửa BL-P01">Sửa</button></td></tr>
+</tbody></table>
+<div class="table-foot"><span>Hiển thị 1–8 trong 146 sản phẩm</span>
+<div class="row-8"><button type="button" class="btn btn--sm" disabled>Trang trước</button><button type="button" class="btn btn--sm">Trang sau</button></div></div></div>
+<dialog id="m-product-new" class="modal" aria-labelledby="m-product-new-title">
+<form method="dialog">
+<div class="modal-head"><h2 id="m-product-new-title" class="card-title">Thêm sản phẩm</h2><button type="button" class="btn btn--sm btn--icon" data-close aria-label="Đóng"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><line x1="5" y1="5" x2="15" y2="15"></line><line x1="15" y1="5" x2="5" y2="15"></line></svg></button></div>
+<div class="modal-body">
+<div class="field"><label for="pn-sku" class="field-label">Mã hàng (SKU)</label><input id="pn-sku" type="text" value="" placeholder="VD: BP-K150" class="input">
+<div class="field-hint">Duy nhất trong hệ thống, không sửa được sau khi đã có chứng từ.</div></div>
+<div class="field"><label for="pn-uom" class="field-label">Đơn vị tính cơ sở</label><select id="pn-uom" class="input"><option selected>Cái (PCS)</option><option>Hộp (BOX)</option><option>Bộ (SET)</option><option>Kg (KG)</option><option>Mét (M)</option></select></div>
+<div class="field span-2"><label for="pn-name" class="field-label">Tên hàng</label><input id="pn-name" type="text" value="" placeholder="VD: Bàn phím cơ K150" class="input"></div>
+<div class="span-2"><label for="pn-active" class="check"><input id="pn-active" type="checkbox" checked>Đang dùng (hiện trong danh sách chọn khi lập chứng từ)</label></div>
+</div>
+<div class="modal-foot"><button type="button" class="btn" data-close>Hủy</button><button type="submit" class="btn btn--primary">Lưu</button></div>
+</form>
+</dialog>
+<dialog id="m-product-edit" class="modal" aria-labelledby="m-product-edit-title">
+<form method="dialog">
+<div class="modal-head"><h2 id="m-product-edit-title" class="card-title">Sửa sản phẩm BP-K120</h2><button type="button" class="btn btn--sm btn--icon" data-close aria-label="Đóng"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><line x1="5" y1="5" x2="15" y2="15"></line><line x1="15" y1="5" x2="5" y2="15"></line></svg></button></div>
+<div class="modal-body">
+<div class="field"><label for="pe-sku" class="field-label">Mã hàng (SKU)</label><input id="pe-sku" type="text" value="BP-K120" readonly class="input input--readonly">
+<div class="field-hint">Đã có chứng từ nên không sửa được mã.</div></div>
+<div class="field"><label for="pe-uom" class="field-label">Đơn vị tính cơ sở</label><select id="pe-uom" class="input"><option selected>Cái (PCS)</option><option>Hộp (BOX)</option><option>Bộ (SET)</option><option>Kg (KG)</option><option>Mét (M)</option></select></div>
+<div class="field span-2"><label for="pe-name" class="field-label">Tên hàng</label><input id="pe-name" type="text" value="Bàn phím cơ K120" class="input"></div>
+<div class="span-2"><label for="pe-active" class="check"><input id="pe-active" type="checkbox" checked>Đang dùng (hiện trong danh sách chọn khi lập chứng từ)</label></div>
+</div>
+<div class="modal-foot"><button type="button" class="btn" data-close>Hủy</button><button type="submit" class="btn btn--primary">Lưu thay đổi</button></div>
+</form>
+</dialog>
+</main>
+</div>
+</div>
+</body>
+</html>

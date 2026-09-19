@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Đơn bán hàng | ERP prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<div class="app">
+<nav class="sidebar" aria-label="Điều hướng chính">
+<div class="brand"><div class="brand-logo"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M3 7 L10 3 L17 7 V15 L10 18 L3 15 Z"></path><path d="M3 7 L10 11 L17 7"></path><line x1="10" y1="11" x2="10" y2="18"></line></svg></div><div class="field"><span class="brand-name">[Tên công ty]</span><span class="text-xs">Mua hàng, kho, bán hàng</span></div></div>
+<div class="nav-group"><a class="nav-link" href="../index.html">Tổng quan</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--purchase"></span>Mua hàng</div>
+<a class="nav-link nav-link--sub" href="../purchase/orders.html">Đơn mua hàng</a>
+<a class="nav-link nav-link--sub" href="../purchase/order-new.html">Tạo đơn mua</a>
+<a class="nav-link nav-link--sub" href="../purchase/receipts.html">Phiếu nhập kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--sales"></span>Bán hàng</div>
+<a class="nav-link nav-link--sub" href="../sales/orders.html" aria-current="page">Đơn bán hàng</a>
+<a class="nav-link nav-link--sub" href="../sales/issues.html">Phiếu xuất kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--inventory"></span>Kho</div>
+<a class="nav-link nav-link--sub" href="../inventory/balances.html">Tồn kho</a>
+<a class="nav-link nav-link--sub" href="../inventory/stock-card.html">Thẻ kho</a>
+<a class="nav-link nav-link--sub" href="../inventory/adjustments.html">Kiểm kê, điều chỉnh</a>
+<a class="nav-link nav-link--sub" href="../inventory/reconcile.html">Đối soát tồn kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--master"></span>Danh mục</div>
+<a class="nav-link nav-link--sub" href="../master/products.html">Sản phẩm</a>
+<a class="nav-link nav-link--sub" href="../master/warehouses.html">Kho hàng</a>
+<a class="nav-link nav-link--sub" href="../master/suppliers.html">Nhà cung cấp</a>
+<a class="nav-link nav-link--sub" href="../master/customers.html">Khách hàng</a>
+<a class="nav-link nav-link--sub" href="../master/currencies.html">Tiền tệ và tỷ giá</a></div>
+</nav>
+<div class="content">
+<header class="topbar"><div class="search"><svg class="search-icon" width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#566575" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><line x1="13.5" y1="13.5" x2="17" y2="17"></line></svg><input class="input input--search" type="search" aria-label="Tìm kiếm" placeholder="Tìm số chứng từ, mã hàng, đối tác"></div><div class="user"><div class="user-meta"><span class="user-name">Nguyễn Thu Hà</span><span class="text-xs">Nhân viên bán hàng</span></div><div class="avatar" aria-hidden="true">TH</div></div></header>
+<main class="main">
+<div class="page-head"><div>
+<div class="breadcrumb">Bán hàng <span aria-hidden="true" class="faint">/</span> Đơn bán hàng</div>
+<div class="row"><h1 class="page-title">Đơn bán hàng</h1></div></div>
+<div class="actions"><button type="button" class="btn">Xuất Excel</button><a href="../sales/order-detail.html" class="btn btn--primary">Tạo đơn bán</a></div></div>
+<div class="card card--compact">
+<div style="display: grid; grid-template-columns: 2fr 1.6fr 1.2fr 1fr auto; gap: 16px;">
+<div class="field"><label for="so-f-q" class="field-label">Tìm kiếm</label><input id="so-f-q" type="text" value="" placeholder="Số SO hoặc mã hàng" class="input"></div>
+<div class="field"><label for="so-f-cus" class="field-label">Khách hàng</label><select id="so-f-cus" class="input"><option selected>Tất cả khách hàng</option><option>Công ty TNHH Minh Phát</option><option>Cửa hàng Tin học Hải Nam</option><option>Công ty CP Giải pháp An Khang</option><option>Công ty TNHH Thương mại Sao Việt</option><option>Công ty CP Công nghệ Phúc Long</option><option>Tech Partner Pte. Ltd</option><option>Khách lẻ</option></select></div>
+<div class="field"><label for="so-f-st" class="field-label">Trạng thái</label><select id="so-f-st" class="input"><option selected>Tất cả</option><option>Nháp</option><option>Đã xác nhận</option><option>Xuất một phần</option><option>Đã xuất đủ</option><option>Đã đóng</option><option>Đã hủy</option></select></div>
+<div class="field"><label for="so-f-dt" class="field-label">Tháng đặt</label><select id="so-f-dt" class="input"><option selected>09/2026</option><option>08/2026</option><option>07/2026</option></select></div>
+<div style="display: flex; align-items: flex-end;"><button type="button" class="btn">Lọc</button></div></div></div>
+<div class="card">
+<table class="table"><thead><tr><th scope="col">Số SO</th><th scope="col">Khách hàng</th><th scope="col">Ngày đặt</th><th scope="col">Tiền tệ</th><th scope="col" class="num">Tổng nguyên tệ</th><th scope="col" class="num">Tổng quy đổi (₫)</th><th scope="col">Tiến độ xuất</th><th scope="col">Trạng thái</th></tr></thead><tbody>
+<tr><td><a href="../sales/order-detail.html" class="link-strong">SO-2026-0596</a></td><td>Công ty TNHH Thương mại Sao Việt</td><td>19/09/2026</td><td>VND</td><td class="num">10.350.000</td><td class="num">10.350.000</td><td><div class="progress"><div class="progress-track"><div class="progress-fill progress-fill--sales" style="width: 0%"></div></div><span class="progress-label">0/15</span></div></td><td><span class="badge">Nháp</span></td></tr>
+<tr><td><a href="../sales/order-detail.html" class="link-strong">SO-2026-0594</a></td><td>Công ty CP Giải pháp An Khang</td><td>18/09/2026</td><td>VND</td><td class="num">12.800.000</td><td class="num">12.800.000</td><td><div class="progress"><div class="progress-track"><div class="progress-fill progress-fill--sales" style="width: 30%"></div></div><span class="progress-label">12/40</span></div></td><td><span class="badge badge--warning">Xuất một phần</span></td></tr>
+<tr><td><a href="../sales/order-detail.html" class="link-strong">SO-2026-0591</a></td><td>Cửa hàng Tin học Hải Nam</td><td>16/09/2026</td><td>VND</td><td class="num">14.750.000</td><td class="num">14.750.000</td><td><div class="progress"><div class="progress-track"><div class="progress-fill progress-fill--sales" style="width: 0%"></div></div><span class="progress-label">0/25</span></div></td><td><span class="badge badge--info">Đã xác nhận</span></td></tr>
+<tr><td><a href="../sales/order-detail.html" class="link-strong">SO-2026-0588</a></td><td>Công ty TNHH Minh Phát</td><td>15/09/2026</td><td>VND</td><td class="num">68.200.000</td><td class="num">68.200.000</td><td><div class="progress"><div class="progress-track"><div class="progress-fill progress-fill--sales" style="width: 78%"></div></div><span class="progress-label">70/90</span></div></td><td><span class="badge badge--warning">Xuất một phần</span></td></tr>
+<tr><td><a href="../sales/order-detail.html" class="link-strong">SO-2026-0585</a></td><td>Khách lẻ</td><td>12/09/2026</td><td>VND</td><td class="num">9.870.000</td><td class="num">9.870.000</td><td><div class="progress"><div class="progress-track"><div class="progress-fill progress-fill--sales" style="width: 0%"></div></div><span class="progress-label">0/3</span></div></td><td><span class="badge badge--muted">Đã hủy</span></td></tr>
+<tr><td><a href="../sales/order-detail.html" class="link-strong">SO-2026-0583</a></td><td>Tech Partner Pte. Ltd</td><td>11/09/2026</td><td>USD</td><td class="num">2.400,00</td><td class="num">60.876.000</td><td><div class="progress"><div class="progress-track"><div class="progress-fill progress-fill--sales" style="width: 100%"></div></div><span class="progress-label">100/100</span></div></td><td><span class="badge badge--success">Đã xuất đủ</span></td></tr>
+<tr><td><a href="../sales/order-detail.html" class="link-strong">SO-2026-0580</a></td><td>Công ty CP Công nghệ Phúc Long</td><td>10/09/2026</td><td>VND</td><td class="num">18.900.000</td><td class="num">18.900.000</td><td><div class="progress"><div class="progress-track"><div class="progress-fill progress-fill--sales" style="width: 100%"></div></div><span class="progress-label">60/60</span></div></td><td><span class="badge badge--success">Đã xuất đủ</span></td></tr>
+<tr><td><a href="../sales/order-detail.html" class="link-strong">SO-2026-0572</a></td><td>Công ty TNHH Minh Phát</td><td>03/09/2026</td><td>VND</td><td class="num">34.500.000</td><td class="num">34.500.000</td><td><div class="progress"><div class="progress-track"><div class="progress-fill progress-fill--sales" style="width: 90%"></div></div><span class="progress-label">45/50</span></div></td><td><span class="badge badge--muted">Đã đóng</span></td></tr>
+</tbody></table>
+<div class="table-foot"><span>Hiển thị 1–8 trong 63 đơn bán</span>
+<div class="row-8"><button type="button" class="btn btn--sm" disabled>Trang trước</button><button type="button" class="btn btn--sm">Trang sau</button></div></div></div>
+</main>
+</div>
+</div>
+</body>
+</html>

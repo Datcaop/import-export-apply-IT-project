@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kho hàng | ERP prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="../assets/styles.css">
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="app">
+<nav class="sidebar" aria-label="Điều hướng chính">
+<div class="brand"><div class="brand-logo"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M3 7 L10 3 L17 7 V15 L10 18 L3 15 Z"></path><path d="M3 7 L10 11 L17 7"></path><line x1="10" y1="11" x2="10" y2="18"></line></svg></div><div class="field"><span class="brand-name">[Tên công ty]</span><span class="text-xs">Mua hàng, kho, bán hàng</span></div></div>
+<div class="nav-group"><a class="nav-link" href="../index.html">Tổng quan</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--purchase"></span>Mua hàng</div>
+<a class="nav-link nav-link--sub" href="../purchase/orders.html">Đơn mua hàng</a>
+<a class="nav-link nav-link--sub" href="../purchase/order-new.html">Tạo đơn mua</a>
+<a class="nav-link nav-link--sub" href="../purchase/receipts.html">Phiếu nhập kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--sales"></span>Bán hàng</div>
+<a class="nav-link nav-link--sub" href="../sales/orders.html">Đơn bán hàng</a>
+<a class="nav-link nav-link--sub" href="../sales/issues.html">Phiếu xuất kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--inventory"></span>Kho</div>
+<a class="nav-link nav-link--sub" href="../inventory/balances.html">Tồn kho</a>
+<a class="nav-link nav-link--sub" href="../inventory/stock-card.html">Thẻ kho</a>
+<a class="nav-link nav-link--sub" href="../inventory/adjustments.html">Kiểm kê, điều chỉnh</a>
+<a class="nav-link nav-link--sub" href="../inventory/reconcile.html">Đối soát tồn kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--master"></span>Danh mục</div>
+<a class="nav-link nav-link--sub" href="../master/products.html">Sản phẩm</a>
+<a class="nav-link nav-link--sub" href="../master/warehouses.html" aria-current="page">Kho hàng</a>
+<a class="nav-link nav-link--sub" href="../master/suppliers.html">Nhà cung cấp</a>
+<a class="nav-link nav-link--sub" href="../master/customers.html">Khách hàng</a>
+<a class="nav-link nav-link--sub" href="../master/currencies.html">Tiền tệ và tỷ giá</a></div>
+</nav>
+<div class="content">
+<header class="topbar"><div class="search"><svg class="search-icon" width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#566575" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><line x1="13.5" y1="13.5" x2="17" y2="17"></line></svg><input class="input input--search" type="search" aria-label="Tìm kiếm" placeholder="Tìm số chứng từ, mã hàng, đối tác"></div><div class="user"><div class="user-meta"><span class="user-name">Nguyễn Thu Hà</span><span class="text-xs">Kế toán</span></div><div class="avatar" aria-hidden="true">TH</div></div></header>
+<main class="main">
+<div class="page-head"><div>
+<div class="breadcrumb">Danh mục <span aria-hidden="true" class="faint">/</span> Kho hàng</div>
+<div class="row"><h1 class="page-title">Kho hàng</h1></div></div>
+<div class="actions"><button type="button" class="btn btn--primary" data-open="m-wh-new"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><line x1="10" y1="4" x2="10" y2="16"></line><line x1="4" y1="10" x2="16" y2="10"></line></svg>Thêm kho</button></div></div>
+<div class="card card--compact">
+<div style="display: grid; grid-template-columns: 2fr 1.2fr auto; gap: 16px;">
+<div class="field"><label for="wh-f-q" class="field-label">Tìm kiếm</label><input id="wh-f-q" type="text" value="" placeholder="Mã hoặc tên kho" class="input"></div>
+<div class="field"><label for="wh-f-st" class="field-label">Trạng thái</label><select id="wh-f-st" class="input"><option selected>Tất cả</option><option>Đang dùng</option><option>Ngừng dùng</option></select></div>
+<div style="display: flex; align-items: flex-end;"><button type="button" class="btn">Lọc</button></div></div></div>
+<div class="card">
+<table class="table"><thead><tr><th scope="col">Mã kho</th><th scope="col">Tên kho</th><th scope="col">Địa chỉ</th><th scope="col" class="num">Mã hàng đang có tồn</th><th scope="col">Trạng thái</th><th scope="col"></th></tr></thead><tbody>
+<tr><td><span class="fw-600">HN</span></td><td>Kho Hà Nội</td><td>Lô A2, KCN Quang Minh, Mê Linh, Hà Nội</td><td class="num">98</td><td><span class="badge badge--success">Đang dùng</span></td><td><button type="button" class="btn btn--sm" data-open="m-wh-edit" aria-label="Sửa HN">Sửa</button></td></tr>
+<tr><td><span class="fw-600">HCM</span></td><td>Kho TP.HCM</td><td>Số 12 đường số 7, KCN Tân Tạo, Bình Tân, TP.HCM</td><td class="num">71</td><td><span class="badge badge--success">Đang dùng</span></td><td><button type="button" class="btn btn--sm" data-open="m-wh-edit" aria-label="Sửa HCM">Sửa</button></td></tr>
+<tr><td><span class="fw-600">DN</span></td><td>Kho Đà Nẵng</td><td>Lô 5, KCN Hòa Khánh, Liên Chiểu, Đà Nẵng</td><td class="num">0</td><td><span class="badge badge--success">Đang dùng</span></td><td><button type="button" class="btn btn--sm" data-open="m-wh-edit" aria-label="Sửa DN">Sửa</button></td></tr>
+<tr><td><span class="fw-600">HN-BH</span></td><td>Kho bảo hành Hà Nội</td><td>Số 18 Phạm Hùng, Cầu Giấy, Hà Nội</td><td class="num">0</td><td><span class="badge badge--success">Đang dùng</span></td><td><button type="button" class="btn btn--sm" data-open="m-wh-edit" aria-label="Sửa HN-BH">Sửa</button></td></tr>
+<tr><td><span class="fw-600">HP</span></td><td>Kho Hải Phòng</td><td>KCN Đình Vũ, Hải An, Hải Phòng</td><td class="num">0</td><td><span class="badge badge--muted">Ngừng dùng</span></td><td><button type="button" class="btn btn--sm" data-open="m-wh-edit" aria-label="Sửa HP">Sửa</button></td></tr>
+<tr><td><span class="fw-600">CT</span></td><td>Kho Cần Thơ</td><td>KCN Trà Nóc, Bình Thủy, Cần Thơ</td><td class="num">0</td><td><span class="badge badge--muted">Ngừng dùng</span></td><td><button type="button" class="btn btn--sm" data-open="m-wh-edit" aria-label="Sửa CT">Sửa</button></td></tr>
+</tbody></table>
+<div class="table-foot"><span>6 kho</span></div></div>
+<div class="alert" role="status"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><circle cx="10" cy="10" r="8"></circle><line x1="10" y1="9" x2="10" y2="14"></line><line x1="10" y1="6" x2="10" y2="6.5"></line></svg><div>Chỉ ngừng dùng được kho không còn tồn. Kho đã có chứng từ không xóa được, chỉ chuyển sang Ngừng dùng.</div></div>
+<dialog id="m-wh-new" class="modal" aria-labelledby="m-wh-new-title">
+<form method="dialog">
+<div class="modal-head"><h2 id="m-wh-new-title" class="card-title">Thêm kho</h2><button type="button" class="btn btn--sm btn--icon" data-close aria-label="Đóng"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><line x1="5" y1="5" x2="15" y2="15"></line><line x1="15" y1="5" x2="5" y2="15"></line></svg></button></div>
+<div class="modal-body">
+<div class="field"><label for="wn-code" class="field-label">Mã kho</label><input id="wn-code" type="text" value="" placeholder="VD: HP2" class="input">
+<div class="field-hint">Duy nhất, dùng trong số chứng từ và báo cáo.</div></div>
+<div class="field"><label for="wn-name" class="field-label">Tên kho</label><input id="wn-name" type="text" value="" placeholder="VD: Kho Hải Phòng 2" class="input"></div>
+<div class="field span-2"><label for="wn-addr" class="field-label">Địa chỉ</label><input id="wn-addr" type="text" value="" class="input"></div>
+<div class="span-2"><label for="wn-active" class="check"><input id="wn-active" type="checkbox" checked>Đang dùng</label></div>
+</div>
+<div class="modal-foot"><button type="button" class="btn" data-close>Hủy</button><button type="submit" class="btn btn--primary">Lưu</button></div>
+</form>
+</dialog>
+<dialog id="m-wh-edit" class="modal" aria-labelledby="m-wh-edit-title">
+<form method="dialog">
+<div class="modal-head"><h2 id="m-wh-edit-title" class="card-title">Sửa kho HN</h2><button type="button" class="btn btn--sm btn--icon" data-close aria-label="Đóng"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><line x1="5" y1="5" x2="15" y2="15"></line><line x1="15" y1="5" x2="5" y2="15"></line></svg></button></div>
+<div class="modal-body">
+<div class="field"><label for="we-code" class="field-label">Mã kho</label><input id="we-code" type="text" value="HN" readonly class="input input--readonly"></div>
+<div class="field"><label for="we-name" class="field-label">Tên kho</label><input id="we-name" type="text" value="Kho Hà Nội" class="input"></div>
+<div class="field span-2"><label for="we-addr" class="field-label">Địa chỉ</label><input id="we-addr" type="text" value="Lô A2, KCN Quang Minh, Mê Linh, Hà Nội" class="input"></div>
+<div class="span-2"><label for="we-active" class="check"><input id="we-active" type="checkbox" checked>Đang dùng</label></div>
+<div class="span-2"><div class="alert alert--danger" role="alert"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><path d="M10 2.5 L18 16.5 H2 Z"></path><line x1="10" y1="8" x2="10" y2="11.5"></line><line x1="10" y1="14" x2="10" y2="14.5"></line></svg><div>Không ngừng dùng được: Kho Hà Nội còn 98 mã hàng có tồn. Chuyển hoặc điều chỉnh hết tồn về 0 trước.</div></div></div>
+</div>
+<div class="modal-foot"><button type="button" class="btn" data-close>Hủy</button><button type="submit" class="btn btn--primary">Lưu thay đổi</button></div>
+</form>
+</dialog>
+</main>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tạo đơn mua | ERP prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<div class="app">
+<nav class="sidebar" aria-label="Điều hướng chính">
+<div class="brand"><div class="brand-logo"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M3 7 L10 3 L17 7 V15 L10 18 L3 15 Z"></path><path d="M3 7 L10 11 L17 7"></path><line x1="10" y1="11" x2="10" y2="18"></line></svg></div><div class="field"><span class="brand-name">[Tên công ty]</span><span class="text-xs">Mua hàng, kho, bán hàng</span></div></div>
+<div class="nav-group"><a class="nav-link" href="../index.html">Tổng quan</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--purchase"></span>Mua hàng</div>
+<a class="nav-link nav-link--sub" href="../purchase/orders.html">Đơn mua hàng</a>
+<a class="nav-link nav-link--sub" href="../purchase/order-new.html" aria-current="page">Tạo đơn mua</a>
+<a class="nav-link nav-link--sub" href="../purchase/receipts.html">Phiếu nhập kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--sales"></span>Bán hàng</div>
+<a class="nav-link nav-link--sub" href="../sales/orders.html">Đơn bán hàng</a>
+<a class="nav-link nav-link--sub" href="../sales/issues.html">Phiếu xuất kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--inventory"></span>Kho</div>
+<a class="nav-link nav-link--sub" href="../inventory/balances.html">Tồn kho</a>
+<a class="nav-link nav-link--sub" href="../inventory/stock-card.html">Thẻ kho</a>
+<a class="nav-link nav-link--sub" href="../inventory/adjustments.html">Kiểm kê, điều chỉnh</a>
+<a class="nav-link nav-link--sub" href="../inventory/reconcile.html">Đối soát tồn kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--master"></span>Danh mục</div>
+<a class="nav-link nav-link--sub" href="../master/products.html">Sản phẩm</a>
+<a class="nav-link nav-link--sub" href="../master/warehouses.html">Kho hàng</a>
+<a class="nav-link nav-link--sub" href="../master/suppliers.html">Nhà cung cấp</a>
+<a class="nav-link nav-link--sub" href="../master/customers.html">Khách hàng</a>
+<a class="nav-link nav-link--sub" href="../master/currencies.html">Tiền tệ và tỷ giá</a></div>
+</nav>
+<div class="content">
+<header class="topbar"><div class="search"><svg class="search-icon" width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#566575" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><line x1="13.5" y1="13.5" x2="17" y2="17"></line></svg><input class="input input--search" type="search" aria-label="Tìm kiếm" placeholder="Tìm số chứng từ, mã hàng, đối tác"></div><div class="user"><div class="user-meta"><span class="user-name">Nguyễn Thu Hà</span><span class="text-xs">Nhân viên mua hàng</span></div><div class="avatar" aria-hidden="true">TH</div></div></header>
+<main class="main">
+<div class="page-head"><div>
+<div class="breadcrumb">Mua hàng <span aria-hidden="true" class="faint">/</span> <a href="../purchase/orders.html" class="link-strong">Đơn mua hàng</a> <span aria-hidden="true" class="faint">/</span> Tạo mới</div>
+<div class="row"><h1 class="page-title">Tạo đơn mua</h1><span class="badge">Nháp</span></div></div>
+<div class="actions"><a href="../purchase/orders.html" class="btn">Hủy</a><button type="button" class="btn">Lưu nháp</button><a href="../purchase/order-detail.html" class="btn btn--primary">Lưu và duyệt</a></div></div>
+<div class="card">
+<div class="grid-form">
+<div class="field"><label for="po-sup" class="field-label">Nhà cung cấp</label><select id="po-sup" class="input"><option selected>Shenzhen Keytech Co., Ltd (NCC-KEYTECH)</option><option>Taipei Display Inc. (NCC-TAIPEI)</option><option>Guangzhou Cable Ltd (NCC-GZCABLE)</option><option>Công ty CP Phụ kiện Việt (NCC-PKV)</option><option>Công ty TNHH Điện tử Hải Âu (NCC-HAIAU)</option><option>Müller Elektronik GmbH (NCC-MUELLER)</option></select></div>
+<div class="field"><label for="po-cur" class="field-label">Tiền tệ</label><select id="po-cur" class="input"><option selected>USD, đô la Mỹ</option><option>VND, đồng Việt Nam</option><option>EUR, euro</option><option>CNY, nhân dân tệ</option></select>
+<div class="field-hint">Tự lấy theo tiền tệ mặc định của nhà cung cấp; có thể đổi trước khi lưu.</div></div>
+<div class="field"><label for="po-rate" class="field-label">Tỷ giá (₫ / USD)</label><input id="po-rate" type="text" value="25.400" class="input input--num">
+<div class="field-hint">Gợi ý từ bảng tỷ giá ngày 19/09/2026, nguồn Vietcombank. Tỷ giá này được chốt trên đơn khi duyệt.</div></div>
+<div class="field"><label for="po-date" class="field-label">Ngày đặt</label><input id="po-date" type="text" value="19/09/2026" class="input"></div>
+<div class="field"><label for="po-exp" class="field-label">Dự kiến về</label><input id="po-exp" type="text" value="10/10/2026" class="input"></div>
+<div class="field"><label for="po-no" class="field-label">Số đơn mua</label><input id="po-no" type="text" value="PO-2026-0145" readonly class="input input--readonly">
+<div class="field-hint">Cấp tự động khi lưu.</div></div>
+<div class="field" style="grid-column: span 2;"><label for="po-note" class="field-label">Ghi chú</label><input id="po-note" type="text" value="" placeholder="Điều khoản giao hàng, thanh toán" class="input"></div>
+</div></div>
+<div class="card">
+<div class="card-head">
+<h2 class="card-title">Dòng hàng</h2><button type="button" class="btn btn--sm"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><line x1="10" y1="4" x2="10" y2="16"></line><line x1="4" y1="10" x2="16" y2="10"></line></svg>Thêm dòng</button></div>
+<table class="table"><thead><tr><th scope="col">#</th><th scope="col">Sản phẩm</th><th scope="col">ĐVT</th><th scope="col" class="num">SL đặt</th><th scope="col" class="num">Đơn giá (USD)</th><th scope="col" class="num">Thành tiền (USD)</th><th scope="col" class="num">Quy đổi (₫)</th><th scope="col"><span class="faint">Xóa</span></th></tr></thead><tbody>
+<tr><td>1</td><td><select id="po-p0" class="input" aria-label="Sản phẩm dòng 1"><option selected>BP-K120 Bàn phím cơ K120</option><option>CH-M50 Chuột không dây M50</option><option>HUB-U4 Bộ chia USB 4 cổng</option></select></td><td>Cái</td><td class="num"><input id="po-q0" type="text" value="100" class="input input--qty" aria-label="Số lượng dòng 1"></td><td class="num"><input id="po-u0" type="text" value="18,50" class="input input--qty" aria-label="Đơn giá dòng 1"></td><td class="num">1.850,00</td><td class="num">46.990.000</td><td><button type="button" class="btn btn--sm btn--icon" aria-label="Xóa dòng 1"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><path d="M4 6 H16"></path><path d="M8 6 V4 H12 V6"></path><path d="M5.5 6 L6.5 17 H13.5 L14.5 6"></path></svg></button></td></tr>
+<tr><td>2</td><td><select id="po-p1" class="input" aria-label="Sản phẩm dòng 2"><option selected>HUB-U4 Bộ chia USB 4 cổng</option><option>BP-K120 Bàn phím cơ K120</option><option>CH-M50 Chuột không dây M50</option></select></td><td>Cái</td><td class="num"><input id="po-q1" type="text" value="50" class="input input--qty" aria-label="Số lượng dòng 2"></td><td class="num"><input id="po-u1" type="text" value="6,20" class="input input--qty" aria-label="Đơn giá dòng 2"></td><td class="num">310,00</td><td class="num">7.874.000</td><td><button type="button" class="btn btn--sm btn--icon" aria-label="Xóa dòng 2"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><path d="M4 6 H16"></path><path d="M8 6 V4 H12 V6"></path><path d="M5.5 6 L6.5 17 H13.5 L14.5 6"></path></svg></button></td></tr>
+<tr><td>3</td><td><input id="po-p2" type="text" value="" placeholder="Gõ mã hoặc tên hàng để chọn" class="input" aria-label="Sản phẩm dòng 3"></td><td><span class="faint">—</span></td><td class="num"><input id="po-q2" type="text" value="" class="input input--qty" aria-label="Số lượng dòng 3"></td><td class="num"><input id="po-u2" type="text" value="" class="input input--qty" aria-label="Đơn giá dòng 3"></td><td class="num"><span class="faint">—</span></td><td class="num"><span class="faint">—</span></td><td><button type="button" class="btn btn--sm btn--icon" aria-label="Xóa dòng 3"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><path d="M4 6 H16"></path><path d="M8 6 V4 H12 V6"></path><path d="M5.5 6 L6.5 17 H13.5 L14.5 6"></path></svg></button></td></tr>
+</tbody></table>
+<div class="between"><span class="text-sm">Dòng để trống sẽ bị bỏ qua khi lưu. Số lượng phải lớn hơn 0.</span>
+<div class="totals"><span class="muted">Tổng nguyên tệ</span><span class="num fw-600">2.160,00 USD</span><span class="muted">Tổng quy đổi theo tỷ giá 25.400</span><span class="num big-num">54.864.000 ₫</span></div></div></div>
+<div class="alert" role="status"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><circle cx="10" cy="10" r="8"></circle><line x1="10" y1="9" x2="10" y2="14"></line><line x1="10" y1="6" x2="10" y2="6.5"></line></svg><div>Đơn ở trạng thái Nháp có thể sửa tự do. Sau khi duyệt, tỷ giá và đơn giá được chốt; phiếu nhập kho sẽ lấy các dòng còn phải nhận từ đơn này.</div></div>
+</main>
+</div>
+</div>
+</body>
+</html>

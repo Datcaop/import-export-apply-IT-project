@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nhà cung cấp | ERP prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="../assets/styles.css">
+<script src="../assets/app.js" defer></script>
+</head>
+<body>
+<div class="app">
+<nav class="sidebar" aria-label="Điều hướng chính">
+<div class="brand"><div class="brand-logo"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M3 7 L10 3 L17 7 V15 L10 18 L3 15 Z"></path><path d="M3 7 L10 11 L17 7"></path><line x1="10" y1="11" x2="10" y2="18"></line></svg></div><div class="field"><span class="brand-name">[Tên công ty]</span><span class="text-xs">Mua hàng, kho, bán hàng</span></div></div>
+<div class="nav-group"><a class="nav-link" href="../index.html">Tổng quan</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--purchase"></span>Mua hàng</div>
+<a class="nav-link nav-link--sub" href="../purchase/orders.html">Đơn mua hàng</a>
+<a class="nav-link nav-link--sub" href="../purchase/order-new.html">Tạo đơn mua</a>
+<a class="nav-link nav-link--sub" href="../purchase/receipts.html">Phiếu nhập kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--sales"></span>Bán hàng</div>
+<a class="nav-link nav-link--sub" href="../sales/orders.html">Đơn bán hàng</a>
+<a class="nav-link nav-link--sub" href="../sales/issues.html">Phiếu xuất kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--inventory"></span>Kho</div>
+<a class="nav-link nav-link--sub" href="../inventory/balances.html">Tồn kho</a>
+<a class="nav-link nav-link--sub" href="../inventory/stock-card.html">Thẻ kho</a>
+<a class="nav-link nav-link--sub" href="../inventory/adjustments.html">Kiểm kê, điều chỉnh</a>
+<a class="nav-link nav-link--sub" href="../inventory/reconcile.html">Đối soát tồn kho</a></div>
+<div class="nav-group"><div class="nav-group-title"><span class="dot dot--master"></span>Danh mục</div>
+<a class="nav-link nav-link--sub" href="../master/products.html">Sản phẩm</a>
+<a class="nav-link nav-link--sub" href="../master/warehouses.html">Kho hàng</a>
+<a class="nav-link nav-link--sub" href="../master/suppliers.html" aria-current="page">Nhà cung cấp</a>
+<a class="nav-link nav-link--sub" href="../master/customers.html">Khách hàng</a>
+<a class="nav-link nav-link--sub" href="../master/currencies.html">Tiền tệ và tỷ giá</a></div>
+</nav>
+<div class="content">
+<header class="topbar"><div class="search"><svg class="search-icon" width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#566575" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"></circle><line x1="13.5" y1="13.5" x2="17" y2="17"></line></svg><input class="input input--search" type="search" aria-label="Tìm kiếm" placeholder="Tìm số chứng từ, mã hàng, đối tác"></div><div class="user"><div class="user-meta"><span class="user-name">Nguyễn Thu Hà</span><span class="text-xs">Kế toán</span></div><div class="avatar" aria-hidden="true">TH</div></div></header>
+<main class="main">
+<div class="page-head"><div>
+<div class="breadcrumb">Danh mục <span aria-hidden="true" class="faint">/</span> Nhà cung cấp</div>
+<div class="row"><h1 class="page-title">Nhà cung cấp</h1></div></div>
+<div class="actions"><button type="button" class="btn">Xuất Excel</button><button type="button" class="btn btn--primary" data-open="m-sup-new"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><line x1="10" y1="4" x2="10" y2="16"></line><line x1="4" y1="10" x2="16" y2="10"></line></svg>Thêm nhà cung cấp</button></div></div>
+<div class="card card--compact">
+<div style="display: grid; grid-template-columns: 2fr 1.2fr 1.2fr auto; gap: 16px;">
+<div class="field"><label for="sp-f-q" class="field-label">Tìm kiếm</label><input id="sp-f-q" type="text" value="" placeholder="Mã, tên hoặc mã số thuế" class="input"></div>
+<div class="field"><label for="sp-f-cur" class="field-label">Tiền tệ mặc định</label><select id="sp-f-cur" class="input"><option selected>Tất cả</option><option>VND</option><option>USD</option><option>EUR</option><option>CNY</option></select></div>
+<div class="field"><label for="sp-f-st" class="field-label">Trạng thái</label><select id="sp-f-st" class="input"><option selected>Tất cả</option><option>Đang dùng</option><option>Ngừng dùng</option></select></div>
+<div style="display: flex; align-items: flex-end;"><button type="button" class="btn">Lọc</button></div></div></div>
+<div class="card">
+<table class="table"><thead><tr><th scope="col">Mã NCC</th><th scope="col">Tên nhà cung cấp</th><th scope="col">Mã số thuế</th><th scope="col">Quốc gia</th><th scope="col">Tiền tệ mặc định</th><th scope="col" class="num">PO đang mở</th><th scope="col">Trạng thái</th><th scope="col"></th></tr></thead><tbody>
+<tr><td><span class="fw-600">NCC-KEYTECH</span></td><td>Shenzhen Keytech Co., Ltd</td><td><span class="faint">—</span></td><td>CN</td><td><span class="fw-600">USD</span></td><td class="num">2</td><td><span class="badge badge--success">Đang dùng</span></td><td><button type="button" class="btn btn--sm" data-open="m-sup-edit" aria-label="Sửa NCC-KEYTECH">Sửa</button></td></tr>
+<tr><td><span class="fw-600">NCC-TAIPEI</span></td><td>Taipei Display Inc.</td><td><span class="faint">—</span></td><td>TW</td><td><span class="fw-600">USD</span></td><td class="num">1</td><td><span class="badge badge--success">Đang dùng</span></td><td><button type="button" class="btn btn--sm" data-open="m-sup-edit" aria-label="Sửa NCC-TAIPEI">Sửa</button></td></tr>
+<tr><td><span class="fw-600">NCC-GZCABLE</span></td><td>Guangzhou Cable Ltd</td><td><span class="faint">—</span></td><td>CN</td><td><span class="fw-600">CNY</span></td><td class="num">0</td><td><span class="badge badge--success">Đang dùng</span></td><td><button type="button" class="btn btn--sm" data-open="m-sup-edit" aria-label="Sửa NCC-GZCABLE">Sửa</button></td></tr>
+<tr><td><span class="fw-600">NCC-PKV</span></td><td>Công ty CP Phụ kiện Việt</td><td>0109876543</td><td>VN</td><td><span class="fw-600">VND</span></td><td class="num">1</td><td><span class="badge badge--success">Đang dùng</span></td><td><button type="button" class="btn btn--sm" data-open="m-sup-edit" aria-label="Sửa NCC-PKV">Sửa</button></td></tr>
+<tr><td><span class="fw-600">NCC-HAIAU</span></td><td>Công ty TNHH Điện tử Hải Âu</td><td>0312345678</td><td>VN</td><td><span class="fw-600">VND</span></td><td class="num">0</td><td><span class="badge badge--success">Đang dùng</span></td><td><button type="button" class="btn btn--sm" data-open="m-sup-edit" aria-label="Sửa NCC-HAIAU">Sửa</button></td></tr>
+<tr><td><span class="fw-600">NCC-MUELLER</span></td><td>Müller Elektronik GmbH</td><td><span class="faint">—</span></td><td>DE</td><td><span class="fw-600">EUR</span></td><td class="num">0</td><td><span class="badge badge--success">Đang dùng</span></td><td><button type="button" class="btn btn--sm" data-open="m-sup-edit" aria-label="Sửa NCC-MUELLER">Sửa</button></td></tr>
+<tr><td><span class="fw-600">NCC-OSAKA</span></td><td>Osaka Parts K.K.</td><td><span class="faint">—</span></td><td>JP</td><td><span class="faint">Chưa đặt</span></td><td class="num">0</td><td><span class="badge badge--muted">Ngừng dùng</span></td><td><button type="button" class="btn btn--sm" data-open="m-sup-edit" aria-label="Sửa NCC-OSAKA">Sửa</button></td></tr>
+</tbody></table>
+<div class="table-foot"><span>Hiển thị 1–7 trong 7 nhà cung cấp</span>
+<div class="row-8"><button type="button" class="btn btn--sm" disabled>Trang trước</button><button type="button" class="btn btn--sm">Trang sau</button></div></div></div>
+<dialog id="m-sup-new" class="modal" aria-labelledby="m-sup-new-title">
+<form method="dialog">
+<div class="modal-head"><h2 id="m-sup-new-title" class="card-title">Thêm nhà cung cấp</h2><button type="button" class="btn btn--sm btn--icon" data-close aria-label="Đóng"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><line x1="5" y1="5" x2="15" y2="15"></line><line x1="15" y1="5" x2="5" y2="15"></line></svg></button></div>
+<div class="modal-body">
+<div class="field"><label for="sn-code" class="field-label">Mã NCC</label><input id="sn-code" type="text" value="" placeholder="VD: NCC-HAIAU" class="input"></div>
+<div class="field"><label for="sn-tax" class="field-label">Mã số thuế</label><input id="sn-tax" type="text" value="" placeholder="Bỏ trống nếu là NCC nước ngoài" class="input"></div>
+<div class="field span-2"><label for="sn-name" class="field-label">Tên nhà cung cấp</label><input id="sn-name" type="text" value="" class="input"></div>
+<div class="field"><label for="sn-country" class="field-label">Quốc gia</label><select id="sn-country" class="input"><option>CN, Trung Quốc</option><option>TW, Đài Loan</option><option selected>VN, Việt Nam</option><option>DE, Đức</option><option>JP, Nhật Bản</option></select></div>
+<div class="field"><label for="sn-cur" class="field-label">Tiền tệ mặc định</label><select id="sn-cur" class="input"><option>USD, đô la Mỹ</option><option selected>VND, đồng Việt Nam</option><option>EUR, euro</option><option>CNY, nhân dân tệ</option><option>Chưa đặt</option></select>
+<div class="field-hint">Đơn mua mới sẽ tự lấy tiền tệ này.</div></div>
+<div class="span-2"><label for="sn-active" class="check"><input id="sn-active" type="checkbox" checked>Đang giao dịch</label></div>
+</div>
+<div class="modal-foot"><button type="button" class="btn" data-close>Hủy</button><button type="submit" class="btn btn--primary">Lưu</button></div>
+</form>
+</dialog>
+<dialog id="m-sup-edit" class="modal" aria-labelledby="m-sup-edit-title">
+<form method="dialog">
+<div class="modal-head"><h2 id="m-sup-edit-title" class="card-title">Sửa nhà cung cấp NCC-KEYTECH</h2><button type="button" class="btn btn--sm btn--icon" data-close aria-label="Đóng"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="shrink-0"><line x1="5" y1="5" x2="15" y2="15"></line><line x1="15" y1="5" x2="5" y2="15"></line></svg></button></div>
+<div class="modal-body">
+<div class="field"><label for="se-code" class="field-label">Mã NCC</label><input id="se-code" type="text" value="NCC-KEYTECH" readonly class="input input--readonly"></div>
+<div class="field"><label for="se-tax" class="field-label">Mã số thuế</label><input id="se-tax" type="text" value="" class="input"></div>
+<div class="field span-2"><label for="se-name" class="field-label">Tên nhà cung cấp</label><input id="se-name" type="text" value="Shenzhen Keytech Co., Ltd" class="input"></div>
+<div class="field"><label for="se-country" class="field-label">Quốc gia</label><select id="se-country" class="input"><option selected>CN, Trung Quốc</option><option>TW, Đài Loan</option><option>VN, Việt Nam</option><option>DE, Đức</option><option>JP, Nhật Bản</option></select></div>
+<div class="field"><label for="se-cur" class="field-label">Tiền tệ mặc định</label><select id="se-cur" class="input"><option selected>USD, đô la Mỹ</option><option>VND, đồng Việt Nam</option><option>EUR, euro</option><option>CNY, nhân dân tệ</option><option>Chưa đặt</option></select>
+<div class="field-hint">Đổi tiền tệ không ảnh hưởng 2 đơn mua đang mở; mỗi đơn giữ tiền tệ riêng.</div></div>
+<div class="span-2"><label for="se-active" class="check"><input id="se-active" type="checkbox" checked>Đang giao dịch</label></div>
+</div>
+<div class="modal-foot"><button type="button" class="btn" data-close>Hủy</button><button type="submit" class="btn btn--primary">Lưu thay đổi</button></div>
+</form>
+</dialog>
+</main>
+</div>
+</div>
+</body>
+</html>
