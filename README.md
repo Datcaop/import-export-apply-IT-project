@@ -35,3 +35,14 @@ Kiểm tra: http://localhost:3001/health → `{"status":"ok","db":"up"}`
 | `pnpm db:generate` | `prisma generate`         |
 | `pnpm db:studio`   | Mở Prisma Studio          |
 | `pnpm db:down`     | Dừng Postgres             |
+
+## Prototype giao diện (HTML tĩnh)
+
+Thư mục `erp-prototype-html/`: 20 màn chính và 6 trang biến thể trạng thái, không cần cài đặt.
+
+```bash
+pnpm prototype          # http://localhost:5500/
+pnpm prototype:check    # kiểm tra link nội bộ
+```
+
+Hoặc bấm đúp `erp-prototype-html/index.html`. Đặc tả màn hình: `docs/SCREEN_SPEC.md`, schema: `docs/schema.sql`.
